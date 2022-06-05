@@ -5,7 +5,11 @@ import sys
 
 class Ui_Menu(QMainWindow):
     def push_button_patient_clicked(self):
-        print ("hasdfgjkh;dlfg")
+        print ("patient clicked")
+    def push_button_medician_clicked(self):
+        print ("medician clicked")
+    def push_button_reception_clicked(self):
+        print ("reception clicked")
         
     def __init__(self):
         super().__init__()
@@ -38,6 +42,8 @@ class Ui_Menu(QMainWindow):
         self.label_menu.setText(_translate("Menu", "Choose your access level"))
         
         self.push_button_patient.clicked.connect(self.push_button_patient_clicked)
+        self.push_button_medician.clicked.connect(self.push_button_medician_clicked)
+        self.push_button_reception.clicked.connect(self.push_button_reception_clicked)
         
 
 
