@@ -69,10 +69,8 @@ class Ui_MedicianWindow(object):
         self.statusbar.setObjectName("statusbar")
         MedicianWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MedicianWindow)
         QtCore.QMetaObject.connectSlotsByName(MedicianWindow)
 
-    def retranslateUi(self, MedicianWindow):
         _translate = QtCore.QCoreApplication.translate
         MedicianWindow.setWindowTitle(_translate("MedicianWindow", "Medician"))
         self.patientsLabel.setText(_translate("MedicianWindow", "Patients"))
