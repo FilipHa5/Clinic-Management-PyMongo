@@ -1,5 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from .ScheduleAppointment import Ui_ScheduleAppointment
+from .AddPatient import Ui_AddPatient
+from .LinkPhysician import Ui_LinkPhysician
 
 
 
@@ -35,7 +38,9 @@ class Ui_MenuReception(QMainWindow):
         self.push_button_add_specialization = QtWidgets.QPushButton(self)
         self.push_button_add_specialization.setGeometry(QtCore.QRect(390, 200, 161, 71))
         self.push_button_add_specialization.setObjectName("push_button_add_specialization")
-
+        self.push_button_return = QtWidgets.QPushButton(self)
+        self.push_button_return.setGeometry(QtCore.QRect(210, 280, 171, 71))
+        self.push_button_return.setObjectName("push_button_return")
         QtCore.QMetaObject.connectSlotsByName(self)
 
         _translate = QtCore.QCoreApplication.translate
@@ -47,5 +52,29 @@ class Ui_MenuReception(QMainWindow):
         self.push_button_patient_link_spec_to_ph.setText(_translate("MenuReception", " Link specialization to physican"))
         self.push_button_reception_add_physician.setText(_translate("MenuReception", "Add new physican"))
         self.push_button_add_specialization.setText(_translate("MenuReception", "Add new specialization"))
+        self.push_button_return.setText(_translate("MenuReception", "Return"))
+        
+        self.ui = None
+        self.push_button_appointment.clicked.connect(self.push_button_appointment_clicked)
+        self.push_button_add_patient.clicked.connect(self.push_button_add_patient_clicked)
+        self.push_button_patient_link_spec_to_ph.clicked.connect(self.push_button_patient_link_spec_to_ph_clicked)
+        self.push_button_return.clicked.connect(self.push_button_return_clicked)
+
+
+    def push_button_appointment_clicked(self):
+        self.ui = Ui_ScheduleAppointment()
+        self.ui.show()
+
+    def push_button_add_patient_clicked(self):
+        self.ui = Ui_AddPatient()
+        self.ui.show()
+
+    def push_button_patient_link_spec_to_ph_clicked(self):
+        self.ui = Ui_LinkPhysician()
+        self.ui.show()
+    
+    
+    def push_button_return_clicked(self):
+        self.close()
 
 

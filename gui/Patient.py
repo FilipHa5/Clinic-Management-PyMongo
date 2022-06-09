@@ -44,7 +44,6 @@ class Ui_Patient(QMainWindow):
         self.return_push_button = QtWidgets.QPushButton(self)
         self.return_push_button.setGeometry(QtCore.QRect(640, 110, 71, 21))
         self.return_push_button.setObjectName("return_push_button")
-
         QtCore.QMetaObject.connectSlotsByName(self)
         
         _translate = QtCore.QCoreApplication.translate
@@ -56,5 +55,11 @@ class Ui_Patient(QMainWindow):
         self.push_button_display.setText(_translate("Patient", "Display"))
         self.label_desc.setText(_translate("Patient", "Insert your data to display your medical history"))
         self.return_push_button.setText(_translate("Patient", "Return"))
+        
+        self.return_push_button.clicked.connect(self.return_push_button_clicked)
+    
+    
+    def return_push_button_clicked(self):
+        self.close()
 
 

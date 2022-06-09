@@ -2,17 +2,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 
 
-class Ui_AddPatient(QMainWindow):
-    def push_button_add_patient_clicked(self):
-        print ("kliknięto dodaj!")
 
+class Ui_AddPatient(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setObjectName("AddPatient")
         self.resize(323, 318)
         self.push_button_add_patient = QtWidgets.QPushButton(self)
-        self.push_button_add_patient.setGeometry(QtCore.QRect(120, 270, 81, 31))
+        self.push_button_add_patient.setGeometry(QtCore.QRect(60, 270, 81, 31))
         self.push_button_add_patient.setObjectName("push_button_add_patient")
+        self.push_button_return = QtWidgets.QPushButton(self)
+        self.push_button_return.setGeometry(QtCore.QRect(170, 270, 81, 31))
+        self.push_button_return.setObjectName("push_button_return")
         self.label_pesel = QtWidgets.QLabel(self)
         self.label_pesel.setGeometry(QtCore.QRect(40, 50, 47, 21))
         font = QtGui.QFont()
@@ -80,6 +81,7 @@ class Ui_AddPatient(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("AddPatient", "Form"))
         self.push_button_add_patient.setText(_translate("AddPatient", "Add patient"))
+        self.push_button_return.setText(_translate("AddPatient", "Return"))
         self.label_pesel.setText(_translate("AddPatient", "PESEL"))
         self.label_given_name.setText(_translate("AddPatient", "Given name"))
         self.label_last_name.setText(_translate("AddPatient", "Last name"))
@@ -91,12 +93,13 @@ class Ui_AddPatient(QMainWindow):
 
         self.push_button_add_patient.clicked.connect(self.push_button_add_patient_clicked)
         date_of_birth = self.date_of_birth_edit.date()
+        self.push_button_return.clicked.connect(self.push_button_return_clicked)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AddPatient = QtWidgets.QWidget()
-    ui = Ui_AddPatient()
-    ui.setupUi(AddPatient)
-    AddPatient.show()
-    sys.exit(app.exec_())
+    
+    def push_button_add_patient_clicked(self):
+        print ("kliknięto dodaj!")
+    
+    def push_button_return_clicked(self):
+        self.close()
+
+
