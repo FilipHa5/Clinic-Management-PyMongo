@@ -1,19 +1,15 @@
 # Created by: PyQt5 UI code generator 5.9.2
 
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-import sys
+from .Medician import Ui_MedicianWindow
+from .Patient import Ui_Patient
+from .MenuReception import Ui_MenuReception
 
 
 
 class Ui_Menu(QMainWindow):
-    def push_button_patient_clicked(self):
-        print ("patient clicked")
-    def push_button_medician_clicked(self):
-        print ("medician clicked")
-    def push_button_reception_clicked(self):
-        print ("reception clicked")
-        
     def __init__(self):
         super().__init__()
         self.setObjectName("Menu")
@@ -44,16 +40,22 @@ class Ui_Menu(QMainWindow):
         self.push_button_patient.setText(_translate("Menu", "Patient"))
         self.label_menu.setText(_translate("Menu", "Choose your access level"))
         
+        self.ui = None
         self.push_button_patient.clicked.connect(self.push_button_patient_clicked)
         self.push_button_medician.clicked.connect(self.push_button_medician_clicked)
         self.push_button_reception.clicked.connect(self.push_button_reception_clicked)
-        
+    
+    
+    def push_button_patient_clicked(self):
+        self.ui = Ui_Patient()
+        self.ui.show()
+    
+    def push_button_medician_clicked(self):
+        self.ui = Ui_MedicianWindow()
+        self.ui.show()
+    
+    def push_button_reception_clicked(self):
+        self.ui = Ui_MenuReception()
+        self.ui.show()
+    
 
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    Menu = QtWidgets.QWidget()
-    ui = Ui_Menu()
-    #ui.setupUi(Menu)
-    ui.show()
-    sys.exit(app.exec_())

@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-import sys
 
 
 
@@ -81,12 +80,12 @@ class Ui_MedicianWindow(QMainWindow):
         self.document_label.setText(_translate("MedicianWindow", "Edit document"))
         self.save_push_button.setText(_translate("MedicianWindow", "Save"))
         self.pesel_append_line_edit.setPlaceholderText(_translate("MedicianWindow", "PESEL"))
+        
+        self.return_push_button.clicked.connect(self.return_push_button_clicked)
+        
+        
+    def return_push_button_clicked(self):
+        self.close()
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    MedicianWindow = QtWidgets.QWidget()
-    ui = Ui_MedicianWindow()
-    ui.show()
-    sys.exit(app.exec_())
 
