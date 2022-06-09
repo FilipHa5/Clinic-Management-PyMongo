@@ -1,6 +1,9 @@
+# Created by: PyQt5 UI code generator 5.9.2
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 import sys
+
 
 
 class Ui_Menu(QMainWindow):

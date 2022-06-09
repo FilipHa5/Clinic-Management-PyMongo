@@ -1,18 +1,15 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Medician.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
+import sys
 
-class Ui_MedicianWindow(object):
-    def setupUi(self, MedicianWindow):
-        MedicianWindow.setObjectName("MedicianWindow")
-        MedicianWindow.resize(703, 593)
-        self.centralwidget = QtWidgets.QWidget(MedicianWindow)
+
+
+class Ui_MedicianWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setObjectName("Medician")
+        self.resize(703, 593)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.display_text_edit = QtWidgets.QTextEdit(self.centralwidget)
         self.display_text_edit.setGeometry(QtCore.QRect(10, 10, 461, 251))
@@ -70,17 +67,14 @@ class Ui_MedicianWindow(object):
         self.patients_combo_box = QtWidgets.QComboBox(self.centralwidget)
         self.patients_combo_box.setGeometry(QtCore.QRect(490, 150, 161, 26))
         self.patients_combo_box.setObjectName("patients_combo_box")
-        MedicianWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MedicianWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MedicianWindow.setStatusBar(self.statusbar)
-
-        self.retranslateUi(MedicianWindow)
-        QtCore.QMetaObject.connectSlotsByName(MedicianWindow)
-
-    def retranslateUi(self, MedicianWindow):
+        self.setStatusBar(self.statusbar)
+        QtCore.QMetaObject.connectSlotsByName(self)
+        
         _translate = QtCore.QCoreApplication.translate
-        MedicianWindow.setWindowTitle(_translate("MedicianWindow", "Medician"))
+        self.setWindowTitle(_translate("MedicianWindow", "Medician"))
         self.patientsLabel.setText(_translate("MedicianWindow", "Visits"))
         self.return_push_button.setText(_translate("MedicianWindow", "Return"))
         self.document_line_edit.setPlaceholderText(_translate("MedicianWindow", "Document ID"))
@@ -90,11 +84,9 @@ class Ui_MedicianWindow(object):
 
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
-    MedicianWindow = QtWidgets.QMainWindow()
+    MedicianWindow = QtWidgets.QWidget()
     ui = Ui_MedicianWindow()
-    ui.setupUi(MedicianWindow)
-    MedicianWindow.show()
+    ui.show()
     sys.exit(app.exec_())
 
