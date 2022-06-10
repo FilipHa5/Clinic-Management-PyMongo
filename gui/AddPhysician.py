@@ -78,11 +78,4 @@ class Ui_AddPhysican(object):
         self.label_last_name_2.setText(_translate("AddPhysican", "Description"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AddPhysican = QtWidgets.QWidget()
-    ui = Ui_AddPhysican()
-    ui.setupUi(AddPhysican)
-    AddPhysican.show()
-    sys.exit(app.exec_())
+

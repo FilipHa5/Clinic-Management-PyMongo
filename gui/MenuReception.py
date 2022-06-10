@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from .utils import block_parrent_window
 from .ScheduleAppointment import Ui_ScheduleAppointment
 from .AddPatient import Ui_AddPatient
 from .LinkPhysician import Ui_LinkPhysician
@@ -63,15 +64,15 @@ class Ui_MenuReception(QMainWindow):
 
     def push_button_appointment_clicked(self):
         self.ui = Ui_ScheduleAppointment()
-        self.ui.show()
+        block_parrent_window(self)
 
     def push_button_add_patient_clicked(self):
         self.ui = Ui_AddPatient()
-        self.ui.show()
+        block_parrent_window(self)
 
     def push_button_patient_link_spec_to_ph_clicked(self):
         self.ui = Ui_LinkPhysician()
-        self.ui.show()
+        block_parrent_window(self)
     
     
     def push_button_return_clicked(self):

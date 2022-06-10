@@ -88,4 +88,3 @@ class Ui_MedicianWindow(QMainWindow):
         self.close()
 
 
-

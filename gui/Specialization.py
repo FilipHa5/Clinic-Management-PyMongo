@@ -49,12 +49,4 @@ class Ui_Specialization(object):
         self.push_button_add.setText(_translate("Specialization", "Add"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Specialization = QtWidgets.QWidget()
-    ui = Ui_Specialization()
-    ui.setupUi(Specialization)
-    Specialization.show()
-    sys.exit(app.exec_())
 

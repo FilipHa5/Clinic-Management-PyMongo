@@ -1,8 +1,8 @@
 # Created by: PyQt5 UI code generator 5.9.2
 
-import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from .utils import block_parrent_window
 from .Medician import Ui_MedicianWindow
 from .Patient import Ui_Patient
 from .MenuReception import Ui_MenuReception
@@ -48,14 +48,14 @@ class Ui_Menu(QMainWindow):
     
     def push_button_patient_clicked(self):
         self.ui = Ui_Patient()
-        self.ui.show()
+        block_parrent_window(self)
     
     def push_button_medician_clicked(self):
         self.ui = Ui_MedicianWindow()
-        self.ui.show()
+        block_parrent_window(self)
     
     def push_button_reception_clicked(self):
         self.ui = Ui_MenuReception()
-        self.ui.show()
+        block_parrent_window(self)
     
 
