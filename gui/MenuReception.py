@@ -4,6 +4,10 @@ from .utils import block_parrent_window
 from .ScheduleAppointment import Ui_ScheduleAppointment
 from .AddPatient import Ui_AddPatient
 from .LinkPhysician import Ui_LinkPhysician
+from .ShowAppointments import Ui_Show_appointments
+from .AddPhysician import Ui_AddPhysican
+from .Specialization import Ui_Specialization
+
 
 
 
