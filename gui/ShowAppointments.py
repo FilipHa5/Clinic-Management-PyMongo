@@ -77,8 +77,10 @@ class Ui_Show_appointments(QMainWindow):
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_display.clicked.connect(self.push_button_display_clicked)
 
-        def return_push_button_clicked(self):
-            self.close()
+    def return_push_button_clicked(self):
+        self.close()
 
-        def push_button_display_clicked(self):
-            print("hjgjhg")
+    def push_button_display_clicked(self):
+        print("hjgjhg")
+
+

@@ -90,7 +90,7 @@ class Ui_MenuReception(QMainWindow):
         block_parrent_window(self)
 
     def push_button_add_specialization_clicked(self):
-        self.ui = Ui_Specialization(self)
+        self.ui = Ui_Specialization()
         block_parrent_window(self)
 
     
