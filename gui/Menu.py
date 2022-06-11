@@ -6,6 +6,9 @@ from .utils import block_parrent_window
 from .Medician import Ui_MedicianWindow
 from .Patient import Ui_Patient
 from .MenuReception import Ui_MenuReception
+from .ShowAppointments import Ui_Show_appointments
+from .AddPhysician import Ui_AddPhysican
+from .Specialization import Ui_Specialization
 
 
 
