@@ -60,6 +60,9 @@ class Ui_MenuReception(QMainWindow):
         self.push_button_add_patient.clicked.connect(self.push_button_add_patient_clicked)
         self.push_button_patient_link_spec_to_ph.clicked.connect(self.push_button_patient_link_spec_to_ph_clicked)
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_show_appointments.clicked.connect(self.push_button_show_appointments_clicked)
+        self.push_button_reception_add_physician.clicked.connect(self.push_button_reception_add_physician_clicked)
+        self.push_button_add_specialization.clicked.connect(self.push_button_add_specialization_clicked)
 
 
     def push_button_appointment_clicked(self):
@@ -73,7 +76,19 @@ class Ui_MenuReception(QMainWindow):
     def push_button_patient_link_spec_to_ph_clicked(self):
         self.ui = Ui_LinkPhysician()
         block_parrent_window(self)
-    
+
+    def push_button_show_appointments_clicked(self):
+        self.ui = Ui_Show_appointments()
+        block_parrent_window(self)
+
+    def push_button_reception_add_physician_clicked(self):
+        self.ui = Ui_AddPhysican()
+        block_parrent_window(self)
+
+    def push_button_add_specialization_clicked(self):
+        self.ui = Ui_Specialization(self)
+        block_parrent_window(self)
+
     
     def push_button_return_clicked(self):
         self.close()
