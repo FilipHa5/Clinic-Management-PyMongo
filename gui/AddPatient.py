@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_AddPatient(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("AddPatient")
         self.resize(323, 318)
@@ -91,14 +91,30 @@ class Ui_AddPatient(QMainWindow):
         self.combo_box_sex.setItemText(0, _translate("AddPatient", "Male"))
         self.combo_box_sex.setItemText(1, _translate("AddPatient", "Female"))
         self.label_header.setText(_translate("AddPatient", "Insert patient data"))
-
+        
+        self.mongo_manager = mongo_manager
         self.push_button_add_patient.clicked.connect(self.push_button_add_patient_clicked)
         date_of_birth = self.date_of_birth_edit.date()
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
 
     
+    def create_patient_dict(self):
+        patient_data = {
+            'pesel': int(self.line_edit_pesel.text()),
+            'name': self.line_edit_given_name.text(),
+            'last_name': self.line_edit_last_name.text(),
+            'sex': self.combo_box_sex.currentText(),
+            'date_of_birth': self.date_of_birth_edit.dateTime().toPyDateTime()
+        }
+        return patient_data
+    
     def push_button_add_patient_clicked(self):
-        print ("kliknięto dodaj!")
+        try:
+            patient_data = self.create_patient_dict()
+            self.mongo_manager.Patient.insert_one(patient_data)
+            self.close()
+        except Exception as e:
+            print(e)
     
     def push_button_return_clicked(self):
         self.close()

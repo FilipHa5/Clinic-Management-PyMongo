@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_LinkPhysician(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("LinkPhysician")
         self.resize(323, 227)
@@ -51,6 +51,7 @@ class Ui_LinkPhysician(QMainWindow):
         self.label_header.setText(_translate("LinkPhysician", "Link physician to specialization"))
         self.label_specialization.setText(_translate("LinkPhysician", "Specialization"))
         
+        self.mongo_manager = mongo_manager
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
 
 

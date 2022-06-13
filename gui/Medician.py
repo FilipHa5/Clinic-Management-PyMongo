@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_MedicianWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Medician")
         self.resize(703, 593)
@@ -22,7 +22,7 @@ class Ui_MedicianWindow(QMainWindow):
         self.editable_text_edit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.editable_text_edit.setObjectName("editable_text_edit")
         self.patientsLabel = QtWidgets.QLabel(self.centralwidget)
-        self.patientsLabel.setGeometry(QtCore.QRect(530, 30, 91, 21))
+        self.patientsLabel.setGeometry(QtCore.QRect(530, 80, 91, 21))
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -58,14 +58,18 @@ class Ui_MedicianWindow(QMainWindow):
         self.type_append_combo_box.setGeometry(QtCore.QRect(490, 400, 161, 26))
         self.type_append_combo_box.setObjectName("type_append_combo_box")
         self.days_combo_box = QtWidgets.QComboBox(self.centralwidget)
-        self.days_combo_box.setGeometry(QtCore.QRect(490, 70, 161, 26))
+        self.days_combo_box.setGeometry(QtCore.QRect(490, 110, 161, 26))
         self.days_combo_box.setObjectName("days_combo_box")
         self.visits_combo_box = QtWidgets.QComboBox(self.centralwidget)
-        self.visits_combo_box.setGeometry(QtCore.QRect(490, 110, 161, 26))
+        self.visits_combo_box.setGeometry(QtCore.QRect(490, 140, 161, 26))
         self.visits_combo_box.setObjectName("visits_combo_box")
-        self.patients_combo_box = QtWidgets.QComboBox(self.centralwidget)
-        self.patients_combo_box.setGeometry(QtCore.QRect(490, 150, 161, 26))
-        self.patients_combo_box.setObjectName("patients_combo_box")
+        self.pwz_line_edit = QtWidgets.QLineEdit(self.centralwidget)
+        self.pwz_line_edit.setGeometry(QtCore.QRect(490, 10, 161, 21))
+        self.pwz_line_edit.setText("")
+        self.pwz_line_edit.setObjectName("pwz_line_edit")
+        self.apply_pwz_push_button = QtWidgets.QPushButton(self.centralwidget)
+        self.apply_pwz_push_button.setGeometry(QtCore.QRect(490, 40, 161, 32))
+        self.apply_pwz_push_button.setObjectName("apply_pwz_push_button")
         self.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
@@ -80,10 +84,18 @@ class Ui_MedicianWindow(QMainWindow):
         self.document_label.setText(_translate("MedicianWindow", "Edit document"))
         self.save_push_button.setText(_translate("MedicianWindow", "Save"))
         self.pesel_append_line_edit.setPlaceholderText(_translate("MedicianWindow", "PESEL"))
+        self.pwz_line_edit.setPlaceholderText(_translate("MedicianWindow", "PWZ"))
+        self.apply_pwz_push_button.setText(_translate("MedicianWindow", "Apply"))
         
+        self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
+        self.apply_pwz_push_button.clicked.connect(self.apply_pwz_push_button_clicked)
         
         
+    def apply_pwz_push_button_clicked(self):
+        self.close()
+    
+    
     def return_push_button_clicked(self):
         self.close()
 

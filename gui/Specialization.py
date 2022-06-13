@@ -1,17 +1,9 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Specialization.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_Specialization(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Specialization")
         self.resize(314, 300)
@@ -47,7 +39,8 @@ class Ui_Specialization(QMainWindow):
         self.label_description.setText(_translate("Specialization", "Description"))
         self.return_push_button.setText(_translate("Specialization", "Return"))
         self.push_button_add.setText(_translate("Specialization", "Add"))
-
+        
+        self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_add.clicked.connect(self.push_button_add_clicked)
 

@@ -12,7 +12,7 @@ from .Specialization import Ui_Specialization
 
 
 class Ui_MenuReception(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("MenuReception")
         self.setWindowModality(QtCore.Qt.NonModal)
@@ -59,6 +59,7 @@ class Ui_MenuReception(QMainWindow):
         self.push_button_add_specialization.setText(_translate("MenuReception", "Add new specialization"))
         self.push_button_return.setText(_translate("MenuReception", "Return"))
         
+        self.mongo_manager = mongo_manager
         self.ui = None
         self.push_button_appointment.clicked.connect(self.push_button_appointment_clicked)
         self.push_button_add_patient.clicked.connect(self.push_button_add_patient_clicked)
@@ -70,27 +71,27 @@ class Ui_MenuReception(QMainWindow):
 
 
     def push_button_appointment_clicked(self):
-        self.ui = Ui_ScheduleAppointment()
+        self.ui = Ui_ScheduleAppointment(self.mongo_manager)
         block_parrent_window(self)
 
     def push_button_add_patient_clicked(self):
-        self.ui = Ui_AddPatient()
+        self.ui = Ui_AddPatient(self.mongo_manager)
         block_parrent_window(self)
 
     def push_button_patient_link_spec_to_ph_clicked(self):
-        self.ui = Ui_LinkPhysician()
+        self.ui = Ui_LinkPhysician(self.mongo_manager)
         block_parrent_window(self)
 
     def push_button_show_appointments_clicked(self):
-        self.ui = Ui_Show_appointments()
+        self.ui = Ui_Show_appointments(self.mongo_manager)
         block_parrent_window(self)
 
     def push_button_reception_add_physician_clicked(self):
-        self.ui = Ui_AddPhysican()
+        self.ui = Ui_AddPhysican(self.mongo_manager)
         block_parrent_window(self)
 
     def push_button_add_specialization_clicked(self):
-        self.ui = Ui_Specialization()
+        self.ui = Ui_Specialization(self.mongo_manager)
         block_parrent_window(self)
 
     

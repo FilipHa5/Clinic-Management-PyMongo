@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_Patient(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Patient")
         self.resize(752, 611)
@@ -56,6 +56,7 @@ class Ui_Patient(QMainWindow):
         self.label_desc.setText(_translate("Patient", "Insert your data to display your medical history"))
         self.return_push_button.setText(_translate("Patient", "Return"))
         
+        self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
     
     

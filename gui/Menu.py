@@ -13,7 +13,7 @@ from .Specialization import Ui_Specialization
 
 
 class Ui_Menu(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Menu")
         self.resize(604, 270)
@@ -43,6 +43,7 @@ class Ui_Menu(QMainWindow):
         self.push_button_patient.setText(_translate("Menu", "Patient"))
         self.label_menu.setText(_translate("Menu", "Choose your access level"))
         
+        self.mongo_manager = mongo_manager
         self.ui = None
         self.push_button_patient.clicked.connect(self.push_button_patient_clicked)
         self.push_button_medician.clicked.connect(self.push_button_medician_clicked)
@@ -50,15 +51,15 @@ class Ui_Menu(QMainWindow):
     
     
     def push_button_patient_clicked(self):
-        self.ui = Ui_Patient()
+        self.ui = Ui_Patient(self.mongo_manager)
         block_parrent_window(self)
     
     def push_button_medician_clicked(self):
-        self.ui = Ui_MedicianWindow()
+        self.ui = Ui_MedicianWindow(self.mongo_manager)
         block_parrent_window(self)
     
     def push_button_reception_clicked(self):
-        self.ui = Ui_MenuReception()
+        self.ui = Ui_MenuReception(self.mongo_manager)
         block_parrent_window(self)
     
 

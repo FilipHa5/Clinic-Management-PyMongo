@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_Show_appointments(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Show_appointments")
         self.resize(752, 611)
@@ -73,7 +73,8 @@ class Ui_Show_appointments(QMainWindow):
         self.label_filter.setText(_translate("Show_appointments", "Filter:"))
         self.combo_box_specialization.setItemText(0, _translate("Show_appointments", "XYZ"))
         self.label_physicians_specialization.setText(_translate("Show_appointments", "Physician\'s specialization"))
-
+        
+        self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_display.clicked.connect(self.push_button_display_clicked)
 
