@@ -39,15 +39,27 @@ class Ui_Specialization(QMainWindow):
         self.label_description.setText(_translate("Specialization", "Description"))
         self.return_push_button.setText(_translate("Specialization", "Return"))
         self.push_button_add.setText(_translate("Specialization", "Add"))
-        
+       
         self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_add.clicked.connect(self.push_button_add_clicked)
+    
+    def create_specialization_dict(self):
+        specialization_data = {
+            'specialization' : self.line_edit_specialization.text(),
+            'description' : self.text_edit_description.text()
+        }
+        return specialization_data
 
     def return_push_button_clicked(self):
         self.close()
 
     def push_button_add_clicked(self):
-        print ("asdf")
+        try:
+            specialization_data = self.create_specialization_dict()
+            self.mongo_manager.Specialization.insert_one(specialization_data)
+            self.close()
+        except Exception as e:
+            print (e)
 
 

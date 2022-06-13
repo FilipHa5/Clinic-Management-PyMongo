@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 
 class Ui_ScheduleAppointment(QMainWindow):
-    def __init__(self):
+    def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("ScheduleAppointment")
         self.resize(323, 294)
@@ -80,11 +80,28 @@ class Ui_ScheduleAppointment(QMainWindow):
         self.label_header.setText(_translate("ScheduleAppointment", "Schedule appointment"))
         self.label_physicans_name.setText(_translate("ScheduleAppointment", "Physican\'s name"))
         self.combo_box_physicans_name.setItemText(0, _translate("ScheduleAppointment", "XYZ"))
-        
+       
+        self.mongo_manager = mongo_manager
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_schedule.clicked.connect(self.push_button_schedule_clicked)
     
+    def create_appointment_dict(self):
+        appointment_data = {
+            'pesel' : int(self.line_edit_pesel.text()),
+            'time' : self.date_time_edit.dateTime().toPyDate(),
+            'physicans_spec' : self.combo_box_specialization.currentText(),
+            'physicans_name' : self.combo_box_physicans_name.currentText()
+        }
+        return appointment_data
     
     def push_button_return_clicked(self):
         self.close()
     
+    def push_button_schedule_clicked(self):
+        try:
+            appointment_data = self.create_appointment_dict()
+            self.mongo_manager.Appointment.insert_one(appointment_data)
+            self.close()
+        except Exception as e:
+            print (e)
 
