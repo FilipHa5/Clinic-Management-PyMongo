@@ -82,27 +82,11 @@
      <string>Return</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="document_line_edit">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>320</y>
-      <width>161</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="placeholderText">
-     <string>Document ID</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="document_label">
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>280</y>
+      <y>290</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -118,7 +102,7 @@
      <string>Edit document</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="document_combo_box">
+   <widget class="QComboBox" name="document_operation_combo_box">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -224,6 +208,16 @@
     </property>
     <property name="text">
      <string>Apply</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="document_id_combo_box">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>320</y>
+      <width>161</width>
+      <height>26</height>
+     </rect>
     </property>
    </widget>
   </widget>
