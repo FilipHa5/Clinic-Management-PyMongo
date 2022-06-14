@@ -100,6 +100,7 @@ class Ui_ScheduleAppointment(QMainWindow):
         
         self.combo_box_physicans_name.addItems(self.pwz_dict.keys())
     
+    
     def create_appointment_dict(self):
         appointment_data = {
             'pesel' : int(self.line_edit_pesel.text()),
