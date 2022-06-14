@@ -90,7 +90,8 @@ class Ui_ScheduleAppointment(QMainWindow):
             'pesel' : int(self.line_edit_pesel.text()),
             'time' : self.date_time_edit.dateTime().toPyDate(),
             'physicans_spec' : self.combo_box_specialization.currentText(),
-            'physicans_name' : self.combo_box_physicans_name.currentText()
+            'pwz' : '',
+            'documents': []
         }
         return appointment_data
     

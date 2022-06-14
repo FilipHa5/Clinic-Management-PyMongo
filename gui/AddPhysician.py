@@ -85,7 +85,8 @@ class Ui_AddPhysican(QMainWindow):
             'pwz': int(self.line_edit_pwz.text()),
             'name': self.line_edit_given_name.text(),
             'last_name': self.line_edit_last_name.text(),
-            'description': self.text_edit_description.toPlainText()
+            'description': self.text_edit_description.toPlainText(),
+            'password': ''
         }
         return medician_data
     
