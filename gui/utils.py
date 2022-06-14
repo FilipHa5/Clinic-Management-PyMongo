@@ -1,4 +1,5 @@
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QComboBox
 
 
 def block_parrent_window(self):
@@ -7,3 +8,9 @@ def block_parrent_window(self):
     """
     self.ui.setWindowModality(QtCore.Qt.ApplicationModal)
     self.ui.show()
+
+
+def populate_combo_box(combo_box, items):
+    
+    for item in items:
+        combo_box.addItem(str(item))

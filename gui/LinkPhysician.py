@@ -53,8 +53,34 @@ class Ui_LinkPhysician(QMainWindow):
         
         self.mongo_manager = mongo_manager
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_link.clicked.connect(self.push_button_link_clicked)
+        self.combo_box_no_pwz.addItems(self.populate_combo_box_no_pwz())
+        self.combo_box_specialization.addItems(self.mongo_manager.Specialization.distinct('specialization'))
 
-
+        
+    def populate_combo_box_no_pwz(self):
+        self.pwz_dict = {}
+        
+        for med in self.mongo_manager.Medician.find():
+            key_name = med['name'] + ' ' + med['last_name'] + ' ' + str(med['pwz'])
+            self.pwz_dict[key_name] = med['pwz']
+        
+        return list(self.pwz_dict.keys())
+    
+    
+    def push_button_link_clicked(self):
+        if not (self.combo_box_no_pwz.count() and self.combo_box_specialization.count()):
+            return
+        try:
+            current_pwz = self.pwz_dict[self.combo_box_no_pwz.currentText()]
+            specialization = self.mongo_manager.Specialization.find_one(
+                    {'specialization': self.combo_box_specialization.currentText()})
+            self.mongo_manager.Medician.update({'pwz': current_pwz}, 
+                        {'$push': {'specializations': specialization}})
+            self.close()
+        except Exception as e:
+            print (e)
+    
     def push_button_return_clicked(self):
         self.close()
 

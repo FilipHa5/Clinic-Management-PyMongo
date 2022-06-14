@@ -76,21 +76,36 @@ class Ui_ScheduleAppointment(QMainWindow):
         self.label_pesel.setText(_translate("ScheduleAppointment", "Patient PESEL"))
         self.label_time.setText(_translate("ScheduleAppointment", "Time of appointment"))
         self.label_specialization.setText(_translate("ScheduleAppointment", "Physican\'s specialization"))
-        self.combo_box_specialization.setItemText(0, _translate("ScheduleAppointment", "XYZ"))
         self.label_header.setText(_translate("ScheduleAppointment", "Schedule appointment"))
         self.label_physicans_name.setText(_translate("ScheduleAppointment", "Physican\'s name"))
-        self.combo_box_physicans_name.setItemText(0, _translate("ScheduleAppointment", "XYZ"))
        
         self.mongo_manager = mongo_manager
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
         self.push_button_schedule.clicked.connect(self.push_button_schedule_clicked)
+        self.combo_box_specialization.addItems(self.mongo_manager.Specialization.distinct('specialization'))
+        self.combo_box_specialization.currentIndexChanged.connect(self.populate_combo_box_physicans_name)
+    
+    
+    def populate_combo_box_physicans_name(self):
+        self.pwz_dict = {}
+        self.combo_box_physicans_name.clear()
+        medicians = self.mongo_manager.Medician.find(
+                        {'specializations.specialization': 
+                            {'$eq': self.combo_box_specialization.currentText()}
+                        }
+                    )
+        for med in medicians:
+            key_name = med['name'] + ' ' + med['last_name'] + ' ' + str(med['pwz'])
+            self.pwz_dict[key_name] = med['pwz']
+        
+        self.combo_box_physicans_name.addItems(self.pwz_dict.keys())
     
     def create_appointment_dict(self):
         appointment_data = {
             'pesel' : int(self.line_edit_pesel.text()),
             'time' : self.date_time_edit.dateTime().toPyDate(),
             'physicans_spec' : self.combo_box_specialization.currentText(),
-            'pwz' : '',
+            'pwz' : self.pwz_dict[self.combo_box_physicans_name.currentText()],
             'documents': []
         }
         return appointment_data
@@ -99,6 +114,10 @@ class Ui_ScheduleAppointment(QMainWindow):
         self.close()
     
     def push_button_schedule_clicked(self):
+        if not (self.line_edit_pesel.text() != '' and 
+            self.combo_box_specialization.count() and 
+            self.combo_box_physicans_name.count()):
+            return
         try:
             appointment_data = self.create_appointment_dict()
             self.mongo_manager.Appointment.insert_one(appointment_data)

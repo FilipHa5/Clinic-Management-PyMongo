@@ -47,7 +47,7 @@ class Ui_Specialization(QMainWindow):
     def create_specialization_dict(self):
         specialization_data = {
             'specialization' : self.line_edit_specialization.text(),
-            'description' : self.text_edit_description.text()
+            'description' : self.text_edit_description.toPlainText()
         }
         return specialization_data
 
