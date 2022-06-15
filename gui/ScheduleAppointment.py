@@ -104,7 +104,7 @@ class Ui_ScheduleAppointment(QMainWindow):
     def create_appointment_dict(self):
         appointment_data = {
             'pesel' : int(self.line_edit_pesel.text()),
-            'time' : self.date_time_edit.dateTime().toPyDate(),
+            'time' : self.date_time_edit.dateTime().toPyDateTime(),
             'physicans_spec' : self.combo_box_specialization.currentText(),
             'pwz' : self.pwz_dict[self.combo_box_physicans_name.currentText()],
             'documents': []
