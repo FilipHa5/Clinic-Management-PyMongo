@@ -109,6 +109,9 @@ class Ui_AddPatient(QMainWindow):
         return patient_data
     
     def push_button_add_patient_clicked(self):
+        if (self.line_edit_pesel.text() == '' or self.line_edit_given_name.text() == '' or
+            self.line_edit_last_name.text() == '' or self.combo_box_sex.currentText()):
+            return
         try:
             patient_data = self.create_patient_dict()
             self.mongo_manager.Patient.insert_one(patient_data)

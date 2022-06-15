@@ -92,8 +92,8 @@ class Ui_AddPhysican(QMainWindow):
         return medician_data
     
     def push_button_add_clicked(self):
-        if self.self.line_edit_pwz.text() == '' or self.line_edit_given_name.text() == '' or
-            self.line_edit_last_name.text() == '' or self.text_edit_description.toPlainText() == '':
+        if (self.line_edit_pwz.text() == '' or self.line_edit_given_name.text() == '' or
+            self.line_edit_last_name.text() == '' or self.text_edit_description.toPlainText() == ''):
             return
         try:
             medician_data = self.create_medician_dict()
