@@ -75,7 +75,7 @@ class Ui_LinkPhysician(QMainWindow):
             current_pwz = self.pwz_dict[self.combo_box_no_pwz.currentText()]
             specialization = self.mongo_manager.Specialization.find_one(
                     {'specialization': self.combo_box_specialization.currentText()})
-            self.mongo_manager.Medician.update({'pwz': current_pwz}, 
+            self.mongo_manager.Medician.update_one({'pwz': current_pwz}, 
                         {'$push': {'specializations': specialization}})
             self.close()
         except Exception as e:
