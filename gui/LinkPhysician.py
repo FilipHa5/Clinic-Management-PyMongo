@@ -71,6 +71,10 @@ class Ui_LinkPhysician(QMainWindow):
     def push_button_link_clicked(self):
         if not (self.combo_box_no_pwz.count() and self.combo_box_specialization.count()):
             return
+        else:
+            self.perform_action_on_data()
+        
+    def perform_action_on_data(self):
         try:
             current_pwz = self.pwz_dict[self.combo_box_no_pwz.currentText()]
             specialization = self.mongo_manager.Specialization.find_one(

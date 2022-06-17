@@ -95,6 +95,10 @@ class Ui_AddPhysican(QMainWindow):
         if (self.line_edit_pwz.text() == '' or self.line_edit_given_name.text() == '' or
             self.line_edit_last_name.text() == '' or self.text_edit_description.toPlainText() == ''):
             return
+        else:
+            self.perform_action_on_data()
+        
+    def perform_action_on_data(self):
         try:
             medician_data = self.create_medician_dict()
             self.mongo_manager.Medician.insert_one(medician_data)
