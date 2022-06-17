@@ -14,3 +14,5 @@ def populate_combo_box(combo_box, items):
     
     for item in items:
         combo_box.addItem(str(item))
+
+

@@ -100,11 +100,79 @@ class Ui_Show_appointments(QMainWindow):
         self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_display.clicked.connect(self.push_button_display_clicked)
-
+        self.combo_box_pesel.addItems( [str(pesel) for pesel in self.mongo_manager.Patient.distinct('pesel')] )
+        self.combo_box_specialization.addItems( self.mongo_manager.Specialization.distinct('specialization') )
+        self.combo_box_specialization.currentIndexChanged.connect(self.populate_combo_box_physicans_name)
+    
+    
+    def populate_combo_box_physicans_name(self):
+        self.pwz_dict = {}
+        self.combo_box_physicans_name.clear()
+        medicians = self.mongo_manager.Medician.find(
+                        {'specializations.specialization': 
+                            {'$eq': self.combo_box_specialization.currentText()}
+                        }
+                    )
+        for med in medicians:
+            key_name = med['name'] + ' ' + med['last_name'] + ' ' + str(med['pwz'])
+            self.pwz_dict[key_name] = med['pwz']
+        
+        self.combo_box_physicans_name.addItems(self.pwz_dict.keys())
+    
+    
     def return_push_button_clicked(self):
         self.close()
-
+    
+    
     def push_button_display_clicked(self):
-        print("hjgjhg")
+        mongo_dicts = self.push_button_display_logic()
+        
+    
+    def push_button_display_logic(self):
+        
+        if not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
+            mongo_output = self.no_radio_checked()
+        if self.pesel_radio_button.isChecked() and not(self.date_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
+            mongo_output = self.only_pesel_checked()
+        if self.date_radio_button.isChecked() and not(self.pesel_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
+            mongo_output = self.only_date_checked()
+        if self.phy_name_radio_button.isChecked() and not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked()):
+            mongo_output = self.only_phy_name_checked()
+        if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and not(self.phy_name_radio_button.isChecked()):
+            mongo_output = self.pesel_date_checked()
+        if self.pesel_radio_button.isChecked() and not(self.date_radio_button.isChecked()) and self.phy_name_radio_button.isChecked():
+            mongo_output = self.pesel_phy_name_checked()
+        if not(self.pesel_radio_button.isChecked()) and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
+            mongo_output = self.date_phy_name_checked()
+        if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
+            mongo_output = self.all_radio_checked()
+        
+        return mongo_output
+
+    def no_radio_checked(self):
+        output = self.mongo_manager.TextInformation.find()
+        return output
+
+    def only_pesel_checked(self):
+        pass
+    
+    def only_date_checked(self):
+        pass
+    
+    def only_phy_name_checked(self):
+        pass
+    
+    def pesel_date_checked(self):
+        pass
+    
+    def pesel_phy_name_checked(self):
+        pass
+    
+    def date_phy_name_checked(self):
+        pass
+    
+    def all_radio_checked(self):
+        pass
+
 
 
