@@ -1,5 +1,7 @@
+import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+
 
 
 class Ui_Show_appointments(QMainWindow):
@@ -132,47 +134,107 @@ class Ui_Show_appointments(QMainWindow):
         
         if not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
             mongo_output = self.no_radio_checked()
+        
         if self.pesel_radio_button.isChecked() and not(self.date_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
             mongo_output = self.only_pesel_checked()
+        
         if self.date_radio_button.isChecked() and not(self.pesel_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
             mongo_output = self.only_date_checked()
+        
         if self.phy_name_radio_button.isChecked() and not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked()):
             mongo_output = self.only_phy_name_checked()
+        
         if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and not(self.phy_name_radio_button.isChecked()):
             mongo_output = self.pesel_date_checked()
+        
         if self.pesel_radio_button.isChecked() and not(self.date_radio_button.isChecked()) and self.phy_name_radio_button.isChecked():
             mongo_output = self.pesel_phy_name_checked()
+        
         if not(self.pesel_radio_button.isChecked()) and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
             mongo_output = self.date_phy_name_checked()
+        
         if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
             mongo_output = self.all_radio_checked()
         
         return mongo_output
-
+    
+    
     def no_radio_checked(self):
         output = self.mongo_manager.TextInformation.find()
         return output
 
     def only_pesel_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "pesel": self.combo_box_pesel.currentText(),
+                    }
+                )
+        return output
     
     def only_date_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "creation_date": {
+                            "$gte": self.date_edit.date().toPyDate(),
+                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                        }
+                    }
+                )
+        return output
     
     def only_phy_name_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
+                    }
+                )
+        return output
     
     def pesel_date_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "pesel": self.combo_box_pesel.currentText(),
+                        "creation_date": {
+                            "$gte": self.date_edit.date().toPyDate(),
+                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                        }
+                    }
+                )
+        return output
     
     def pesel_phy_name_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "pesel": self.combo_box_pesel.currentText(),
+                        "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
+                    }
+                )
+        return output
     
     def date_phy_name_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "creation_date": {
+                            "$gte": self.date_edit.date().toPyDate(),
+                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                        },
+                        "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
+                    }
+                )
+        return output
     
     def all_radio_checked(self):
-        pass
+        output = self.mongo_manager.TextInformation.find(
+                    {
+                        "pesel": self.combo_box_pesel.currentText(),
+                        "creation_date": {
+                            "$gte": self.date_edit.date().toPyDate(),
+                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                        },
+                        "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
+                    }
+                )
+        return output
 
 
 
