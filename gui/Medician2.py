@@ -66,9 +66,9 @@ class Ui_Medician2(QMainWindow):
         self.label_patient_2 = QtWidgets.QLabel(self)
         self.label_patient_2.setGeometry(QtCore.QRect(650, 110, 131, 16))
         self.label_patient_2.setObjectName("label_patient_2")
-        self.combo_box_patient_2 = QtWidgets.QComboBox(self)
-        self.combo_box_patient_2.setGeometry(QtCore.QRect(560, 140, 241, 26))
-        self.combo_box_patient_2.setObjectName("combo_box_patient_2")
+        self.combo_box_date = QtWidgets.QComboBox(self)
+        self.combo_box_date.setGeometry(QtCore.QRect(560, 140, 241, 26))
+        self.combo_box_date.setObjectName("combo_box_patient_2")
         QtCore.QMetaObject.connectSlotsByName(self)
 
         self.mongo_manager = mongo_manager
