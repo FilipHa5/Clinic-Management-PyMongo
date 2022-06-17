@@ -1,12 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-import random as r
 
 class Ui_Referral(QMainWindow):
     def __init__(self, mongo_manager):
         super().__init__()
         self.setObjectName("Referral")
-        self.resize(542, 545)
+        self.resize(542, 390)
         self.label_title = QtWidgets.QLabel(self)
         self.label_title.setGeometry(QtCore.QRect(20, 20, 361, 20))
         font = QtGui.QFont()
@@ -30,35 +29,21 @@ class Ui_Referral(QMainWindow):
         self.text_edit_patient_data.setReadOnly(True)
         self.text_edit_patient_data.setObjectName("text_edit_patient_data")
         self.line_edit_dest = QtWidgets.QLineEdit(self)
-        self.line_edit_dest.setGeometry(QtCore.QRect(20, 220, 501, 22))
+        self.line_edit_dest.setGeometry(QtCore.QRect(20, 150, 501, 22))
         self.line_edit_dest.setText("")
         self.line_edit_dest.setObjectName("line_edit_dest")
         self.text_edit_description = QtWidgets.QTextEdit(self)
-        self.text_edit_description.setGeometry(QtCore.QRect(20, 300, 501, 131))
+        self.text_edit_description.setGeometry(QtCore.QRect(20, 200, 501, 131))
         self.text_edit_description.setObjectName("text_edit_description")
         self.label_description = QtWidgets.QLabel(self)
-        self.label_description.setGeometry(QtCore.QRect(20, 280, 181, 16))
+        self.label_description.setGeometry(QtCore.QRect(20, 180, 181, 16))
         self.label_description.setObjectName("label_description")
         self.push_button_add = QtWidgets.QPushButton(self)
-        self.push_button_add.setGeometry(QtCore.QRect(350, 510, 75, 24))
+        self.push_button_add.setGeometry(QtCore.QRect(350, 350, 75, 24))
         self.push_button_add.setObjectName("push_button_add")
         self.push_button_return = QtWidgets.QPushButton(self)
-        self.push_button_return.setGeometry(QtCore.QRect(440, 510, 75, 24))
+        self.push_button_return.setGeometry(QtCore.QRect(440, 350, 75, 24))
         self.push_button_return.setObjectName("push_button_return")
-        self.combo_box_codes = QtWidgets.QComboBox(self)
-        self.combo_box_codes.setGeometry(QtCore.QRect(20, 180, 501, 22))
-        self.combo_box_codes.setObjectName("combo_box_codes")
-        self.label_code = QtWidgets.QLabel(self)
-        self.label_code.setGeometry(QtCore.QRect(20, 160, 181, 16))
-        self.label_code.setObjectName("label_code")
-        self.line_edit_just = QtWidgets.QLineEdit(self)
-        self.line_edit_just.setGeometry(QtCore.QRect(20, 250, 501, 22))
-        self.line_edit_just.setText("")
-        self.line_edit_just.setObjectName("line_edit_dest_2")
-        self.line_edit_comment = QtWidgets.QLineEdit(self)
-        self.line_edit_comment.setGeometry(QtCore.QRect(20, 450, 501, 22))
-        self.line_edit_comment.setText("")
-        self.line_edit_comment.setObjectName("line_edit_dest_3")
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
 
@@ -71,29 +56,8 @@ class Ui_Referral(QMainWindow):
         self.label_description.setText(_translate("Referral", "Purpose of referral"))
         self.push_button_add.setText(_translate("Referral", "Add"))
         self.push_button_return.setText(_translate("Referral", "Return"))
-        self.label_code.setText(_translate("Referral", "Code and issue"))
-        self.line_edit_just.setPlaceholderText(_translate("Referral", "Justification"))
-        self.line_edit_comment.setPlaceholderText(_translate("Referral", "Comment"))
-
+        
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
-
-    def populate_combo_box_codes(self):
-        with open('ICD.txt') as f:
-            self.combo_box_codes.insertItem(f.readlines())
-
-    def create_referral_data(self):
-        referral_data = {
-            'id' : r.randint(1000,99999),
-            'code_issue' : self.combo_box_codes.currentText(),
-            'destination' : self.line_edit_dest.text(),
-            'description': self.text_edit_description.toPlainText(),
-            'justification' : self.line_edit_just.text(),
-            'comment' : self.line_edit_comment.text()
-        }
 
     def push_button_return_clicked(self):
         self.close()
-
-    def push_button_add_clicked(self):
-        print('swfde')
-        #self.close()

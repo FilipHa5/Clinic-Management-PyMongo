@@ -81,7 +81,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Visits for today</string>
+    <string>Visits</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_patient">
@@ -215,6 +215,29 @@
    </property>
    <property name="text">
     <string>Edit data</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_patient_2">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>110</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Select date</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="combo_box_patient_2">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>140</y>
+     <width>241</width>
+     <height>26</height>
+    </rect>
    </property>
   </widget>
  </widget>

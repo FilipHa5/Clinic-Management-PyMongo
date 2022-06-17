@@ -1,9 +1,10 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-from .Referral import Ui_Referral
-from .Prescription import Ui_Prescription
 from .AppointmentData import Ui_AppointmentData
+from .Prescription import Ui_Prescription
+from .Referral import Ui_Referral
 from .utils import block_parrent_window
+
 
 class Ui_Medician2(QMainWindow):
     def __init__(self, mongo_manager):
@@ -62,14 +63,21 @@ class Ui_Medician2(QMainWindow):
         self.push_button_edit = QtWidgets.QPushButton(self)
         self.push_button_edit.setGeometry(QtCore.QRect(690, 500, 111, 24))
         self.push_button_edit.setObjectName("push_button_edit")
+        self.label_patient_2 = QtWidgets.QLabel(self)
+        self.label_patient_2.setGeometry(QtCore.QRect(650, 110, 131, 16))
+        self.label_patient_2.setObjectName("label_patient_2")
+        self.combo_box_patient_2 = QtWidgets.QComboBox(self)
+        self.combo_box_patient_2.setGeometry(QtCore.QRect(560, 140, 241, 26))
+        self.combo_box_patient_2.setObjectName("combo_box_patient_2")
         QtCore.QMetaObject.connectSlotsByName(self)
-       
+
         self.mongo_manager = mongo_manager
+
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Medician2", "Form"))
         self.apply_pwz_push_button.setText(_translate("Medician2", "Apply"))
         self.pwz_line_edit.setPlaceholderText(_translate("Medician2", "Insert your PWZ"))
-        self.label_visits.setText(_translate("Medician2", "Visits for today"))
+        self.label_visits.setText(_translate("Medician2", "Visits"))
         self.label_patient.setText(_translate("Medician2", "Patient"))
         self.push_button_ref.setText(_translate("Medician2", "Add referral"))
         self.push_button_presc.setText(_translate("Medician2", "Add prescription"))
@@ -78,26 +86,24 @@ class Ui_Medician2(QMainWindow):
         self.label_history.setText(_translate("Medician2", "Medical history"))
         self.label_appointment.setText(_translate("Medician2", "Appointment"))
         self.push_button_edit.setText(_translate("Medician2", "Edit data"))
+        self.label_patient_2.setText(_translate("Medician2", "Select date"))
 
+        self.push_button_desc.clicked.connect(self.push_button_desc_clicked)
+        self.push_button_presc.clicked.connect(self.push_button_presc_clicked)
         self.push_button_ref.clicked.connect(self.push_button_ref_clicked)
-        self.push_button_desc.clicked.connect(self.push_button_description_clicked)
-        self.push_button_presc.clicked.connect(self.push_button_pres_clicked)
-        self.return_push_button.clicked.connect(self.push_button_return_clicked)
+        self.return_push_button.clicked.connect(self.return_push_button_clicked)
 
-    def push_button_return_clicked(self):
+    def return_push_button_clicked(self):
         self.close()
 
     def push_button_ref_clicked(self):
         self.ui = Ui_Referral(self.mongo_manager)
         block_parrent_window(self)
-        self.ui.show()
 
-    def push_button_pres_clicked(self):
+    def push_button_presc_clicked(self):
         self.ui = Ui_Prescription(self.mongo_manager)
         block_parrent_window(self)
-        self.ui.show()
 
-    def push_button_description_clicked(self):
+    def push_button_desc_clicked(self):
         self.ui = Ui_AppointmentData(self.mongo_manager)
         block_parrent_window(self)
-        self.ui.show()

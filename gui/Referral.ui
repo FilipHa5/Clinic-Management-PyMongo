@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>542</width>
-    <height>545</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
+     <y>150</y>
      <width>501</width>
      <height>22</height>
     </rect>
@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>300</y>
+     <y>200</y>
      <width>501</width>
      <height>131</height>
     </rect>
@@ -115,7 +115,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>280</y>
+     <y>180</y>
      <width>181</width>
      <height>16</height>
     </rect>
@@ -128,7 +128,7 @@
    <property name="geometry">
     <rect>
      <x>350</x>
-     <y>510</y>
+     <y>350</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -141,68 +141,13 @@
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>510</y>
+     <y>350</y>
      <width>75</width>
      <height>24</height>
     </rect>
    </property>
    <property name="text">
     <string>Return</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="combo_box_codes">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>180</y>
-     <width>501</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_code">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>181</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Code and issue</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="line_edit_dest_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>250</y>
-     <width>501</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="placeholderText">
-    <string>Justification</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="line_edit_dest_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>450</y>
-     <width>501</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="placeholderText">
-    <string>Comment</string>
    </property>
   </widget>
  </widget>
