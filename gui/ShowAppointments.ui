@@ -78,19 +78,6 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="line_edit_pesel">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>80</y>
-     <width>121</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Patient PESEL</string>
-   </property>
-  </widget>
   <widget class="QDateEdit" name="date_edit">
    <property name="geometry">
     <rect>
@@ -191,6 +178,84 @@
    </property>
    <property name="text">
     <string>Physician's specialization</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="combo_box_pesel">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>80</y>
+     <width>121</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="editable">
+    <bool>false</bool>
+   </property>
+   <property name="currentText">
+    <string>XYZ</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>XYZ</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QRadioButton" name="pesel_radio_button">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>110</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="date_radio_button">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>110</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="phy_name_radio_button">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>110</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="specialization_radio_button">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>110</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

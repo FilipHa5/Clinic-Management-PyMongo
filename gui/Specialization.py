@@ -57,6 +57,10 @@ class Ui_Specialization(QMainWindow):
     def push_button_add_clicked(self):
         if self.line_edit_specialization.text() == '' or self.text_edit_description.toPlainText() == '':
             return
+        else:
+            self.perform_action_on_data()
+        
+    def perform_action_on_data(self):
         try:
             specialization_data = self.create_specialization_dict()
             self.mongo_manager.Specialization.insert_one(specialization_data)

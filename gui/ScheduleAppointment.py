@@ -111,18 +111,22 @@ class Ui_ScheduleAppointment(QMainWindow):
         }
         return appointment_data
     
-    def push_button_return_clicked(self):
-        self.close()
-    
     def push_button_schedule_clicked(self):
         if not (self.line_edit_pesel.text() != '' and 
             self.combo_box_specialization.count() and 
             self.combo_box_physicans_name.count()):
             return
+        else:
+            self.perform_action_on_data()
+        
+    def perform_action_on_data(self):
         try:
             appointment_data = self.create_appointment_dict()
             self.mongo_manager.Appointment.insert_one(appointment_data)
             self.close()
         except Exception as e:
             print (e)
+    
+    def push_button_return_clicked(self):
+        self.close()
 
