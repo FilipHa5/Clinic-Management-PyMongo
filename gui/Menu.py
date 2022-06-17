@@ -3,7 +3,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from .utils import block_parrent_window
-from .Medician import Ui_MedicianWindow
+from .Medician2 import Ui_Medician2
 from .Patient import Ui_Patient
 from .MenuReception import Ui_MenuReception
 from .ShowAppointments import Ui_Show_appointments
@@ -55,7 +55,7 @@ class Ui_Menu(QMainWindow):
         block_parrent_window(self)
     
     def push_button_medician_clicked(self):
-        self.ui = Ui_MedicianWindow(self.mongo_manager)
+        self.ui = Ui_Medician2(self.mongo_manager)
         block_parrent_window(self)
     
     def push_button_reception_clicked(self):

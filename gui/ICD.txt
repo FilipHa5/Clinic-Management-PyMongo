@@ -1,0 +1,10 @@
+S00 Superficial head injury,
+S01 Open head wound,
+S02 Fracture of the bones of the skull and face,
+S03 Dislocation, sprain and strain of joints and ligaments of the head,
+S04 Injury of cranial nerves,
+S05 Injury of the eye and orbit,
+S06 Intracranial injury,
+S07 Crushing injury of the head,
+S08 Traumatic amputation of the head part,
+S09 Other and unspecified head injuries

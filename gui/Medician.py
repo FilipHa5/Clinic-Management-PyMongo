@@ -88,12 +88,26 @@ class Ui_MedicianWindow(QMainWindow):
         self.mongo_manager = mongo_manager
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.apply_pwz_push_button.clicked.connect(self.apply_pwz_push_button_clicked)
-        
-        
+
+    def populate_type_append_combo_box(self):
+        self.type_append_combo_box.addItem("Description")
+        self.type_append_combo_box.addItem("Prescription")
+        self.type_append_combo_box.addItem("Referral")
+
     def apply_pwz_push_button_clicked(self):
-        self.close()
-    
-    
+        pwz_int = int(self.pwz_line_edit.text())
+        appointments = self.mongo_manager.Appointment.find(
+                        {
+                        'pwz':
+                            {'$eq': pwz_int}
+                        }
+                    )        
+        for pwz in appointments:
+            self.display_text_edit.append(str(pwz))
+            print(pwz)
+
+
+
     def return_push_button_clicked(self):
         self.close()
 
