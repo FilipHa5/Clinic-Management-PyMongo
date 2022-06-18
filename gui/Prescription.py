@@ -1,5 +1,8 @@
+from tokenize import Number
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+import datetime
+import random
 
 class Ui_Prescription(QMainWindow):
     def __init__(self, mongo_manager):
@@ -57,6 +60,39 @@ class Ui_Prescription(QMainWindow):
         self.push_button_add_2.setText(_translate("Prescription", "Add to list"))
 
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_add.clicked.connect(self.push_button_add_clicked)
+        self.push_button_add_2.clicked.connect(self.add_drug)
+        self.drugs_list = []
+        self.number
+
+    def generate_number(self):
+        number = random.randint(1000, 9999)
+        self.line_edit_ID.setText(str(number))
+        return number
+
+    def create_prescription_data(self):
+
+        prescription_data = {
+            "title" : ("prescription for patient" + self.values[1]),
+            "type" : "prescription",
+            "pwz" : self.values[0],
+            "pesel" : self.values[1],
+            "creation_date" : datetime.now(),
+            "number" : int(self.line_edit_ID.text()),
+            "drugs_list" : self.drugs_list,
+        }
+        return prescription_data
+
+    def push_button_add_clicked(self):
+        try:
+            prescription_data = self.create_prescription_data()
+            self.mongo_manager.TextInformation.insert_one(prescription_data)
+        except Exception as e:
+            print (e)
+
+    def add_drug(self):
+        self.drugs_list += self.text_edit_drug.toPlainText()
+        self.text_edit_drug.clear()
 
     def push_button_return_clicked(self):
         self.close()

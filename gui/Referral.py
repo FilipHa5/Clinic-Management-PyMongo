@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+import datetime
+import random
 
 class Ui_Referral(QMainWindow):
     def __init__(self, mongo_manager):
@@ -46,6 +48,7 @@ class Ui_Referral(QMainWindow):
         self.push_button_return.setObjectName("push_button_return")
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
+        self.number
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Referral", "Form"))
@@ -58,6 +61,32 @@ class Ui_Referral(QMainWindow):
         self.push_button_return.setText(_translate("Referral", "Return"))
         
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_add.clicked.connect(self.push_button_add_clicked)
+
+    def generate_number(self):
+        number = random.randint(1000, 9999)
+        self.line_edit_id.setText(str(number))
+        return number
+
+    def create_referral_data(self):
+        referral_data = {
+            "title" : ("referral for patient" + self.values[1]),
+            "type" : "description",
+            "pwz" : self.values[0],
+            "pesel" : self.values[1],
+            "creation_date" : datetime.now(),
+            'number' : int(self.line_edit_id.text()),
+            'destination_specialization' : self.line_edit_dest.text(),
+            "purpose" : self.text_edit_description.toPlainText()
+        }
+        return referral_data
+        
+    def push_button_add_clicked(self):
+        try:
+            referral_data = self.create_referral_data()
+            self.mongo_manager.TextInformation.insert_one(referral_data)
+        except Exception as e:
+            print (e)
 
     def push_button_return_clicked(self):
         self.close()

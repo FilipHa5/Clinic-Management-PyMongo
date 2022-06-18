@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from datetime import datetime
 
 class Ui_AppointmentData(QMainWindow):
-    def __init__(self, mongo_manager):
+    def __init__(self, mongo_manager, values):
         super().__init__()
         self.setObjectName("AppointmentData")
         self.resize(658, 606)
@@ -49,6 +50,7 @@ class Ui_AppointmentData(QMainWindow):
         self.push_button_add.setObjectName("push_button_add")
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
+        self.values = values
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("AppointmentData", "Form"))
@@ -61,6 +63,27 @@ class Ui_AppointmentData(QMainWindow):
         self.push_button_add.setText(_translate("AppointmentData", "Add"))
 
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
+        self.push_button_add.clicked.connect(self.push_button_add_clicked)
+
+    def create_appointment_dict(self):
+        appointment_data = {
+            "title" : ("report for patient" + self.values[1]),
+            "type" : "description",
+            "pwz" : self.values[0],
+            "pesel" : self.values[1],
+            "creation_date" : datetime.now(),
+            "subjective_examination" : self.text_edit_sub.toPlainText(),
+            "physical_examination" : self.text_edit_physical_exam.toPlainText(),
+            "recomendations" : self.text_edit_recom.toPlainText()
+        }
+        return appointment_data
+
+    def push_button_add_clicked(self):
+        try:
+            appointment_data = self.create_appointment_dict()
+            self.mongo_manager.TextInformation.insert_one(appointment_data)
+        except Exception as e:
+            print (e)
 
     def push_button_return_clicked(self):
         self.close()

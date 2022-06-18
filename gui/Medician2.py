@@ -1,9 +1,11 @@
+from optparse import Values
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from .AppointmentData import Ui_AppointmentData
 from .Prescription import Ui_Prescription
 from .Referral import Ui_Referral
 from .utils import block_parrent_window
+from .utils import make_str_from_documents
 
 
 class Ui_Medician2(QMainWindow):
@@ -71,8 +73,6 @@ class Ui_Medician2(QMainWindow):
         self.combo_box_date.setObjectName("combo_box_patient_2")
         QtCore.QMetaObject.connectSlotsByName(self)
 
-        self.mongo_manager = mongo_manager
-
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Medician2", "Form"))
         self.apply_pwz_push_button.setText(_translate("Medician2", "Apply"))
@@ -93,17 +93,40 @@ class Ui_Medician2(QMainWindow):
         self.push_button_ref.clicked.connect(self.push_button_ref_clicked)
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
 
+        self.mongo_manager = mongo_manager
+        self.values = []
+        self.return_push_button.clicked.connect(self.return_push_button_clicked)
+        self.apply_pwz_push_button.clicked.connect(self.apply_pwz_push_button_clicked)
+
+
+    def create_needed_values(self):
+        self.values.append()
+        return self.values
+
+    def apply_pwz_push_button_clicked(self):
+        pwz_int = int(self.pwz_line_edit.text())
+        appointments = self.mongo_manager.Appointment.find(
+                        {
+                        'pwz':
+                            {'$eq': pwz_int}
+                        }
+                    )      
+        self.combo_box_date.addItems(self.mongo_manager.Appointment.distinct('time'))
+        self.create_needed_values()
+        for visit in appointments:
+            self.display_text_edit.append(make_str_from_documents(visit, self.mongo_manager))
+
     def return_push_button_clicked(self):
         self.close()
 
     def push_button_ref_clicked(self):
-        self.ui = Ui_Referral(self.mongo_manager)
+        self.ui = Ui_Referral(self.mongo_manager, self.values)
         block_parrent_window(self)
 
     def push_button_presc_clicked(self):
-        self.ui = Ui_Prescription(self.mongo_manager)
+        self.ui = Ui_Prescription(self.mongo_manager, self.values)
         block_parrent_window(self)
 
     def push_button_desc_clicked(self):
-        self.ui = Ui_AppointmentData(self.mongo_manager)
+        self.ui = Ui_AppointmentData(self.mongo_manager, self.values)
         block_parrent_window(self)
