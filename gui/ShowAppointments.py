@@ -1,7 +1,7 @@
 import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-from utils import make_str_from_documents
+from .utils import make_str_from_documents
 
 
 
@@ -129,8 +129,9 @@ class Ui_Show_appointments(QMainWindow):
     
     def push_button_display_clicked(self):
         mongo_dicts = self.push_button_display_logic()
-        output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
-        self.display_text_edit.setPlainText(output_string)
+        if mongo_dicts.count() > 0:
+            output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
+            self.display_text_edit.setPlainText(output_string)
         
     
     def push_button_display_logic(self):
@@ -178,8 +179,8 @@ class Ui_Show_appointments(QMainWindow):
         output = self.mongo_manager.TextInformation.find(
                     {
                         "creation_date": {
-                            "$gte": self.date_edit.date().toPyDate(),
-                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                            "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
+                            "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
                         }
                     }
                 )
@@ -198,8 +199,8 @@ class Ui_Show_appointments(QMainWindow):
                     {
                         "pesel": self.combo_box_pesel.currentText(),
                         "creation_date": {
-                            "$gte": self.date_edit.date().toPyDate(),
-                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                            "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
+                            "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
                         }
                     }
                 )
@@ -218,8 +219,8 @@ class Ui_Show_appointments(QMainWindow):
         output = self.mongo_manager.TextInformation.find(
                     {
                         "creation_date": {
-                            "$gte": self.date_edit.date().toPyDate(),
-                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                            "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
+                            "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
                         },
                         "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
                     }
@@ -231,8 +232,8 @@ class Ui_Show_appointments(QMainWindow):
                     {
                         "pesel": self.combo_box_pesel.currentText(),
                         "creation_date": {
-                            "$gte": self.date_edit.date().toPyDate(),
-                            "$lt" : self.date_edit.date().toPyDate() + datetime.timedelta(days=1)
+                            "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
+                            "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
                         },
                         "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
                     }
