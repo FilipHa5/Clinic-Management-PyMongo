@@ -101,6 +101,7 @@ class Ui_Show_appointments(QMainWindow):
         self.label_physicians_specialization.setText(_translate("Show_appointments", "Physician\'s specialization"))
         
         self.mongo_manager = mongo_manager
+        self.pwz_dict = {}
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
         self.push_button_display.clicked.connect(self.push_button_display_clicked)
         self.combo_box_pesel.addItems( [str(pesel) for pesel in self.mongo_manager.Patient.distinct('pesel')] )
@@ -128,6 +129,7 @@ class Ui_Show_appointments(QMainWindow):
     
     
     def push_button_display_clicked(self):
+        self.display_text_edit.clear()
         mongo_dicts = self.push_button_display_logic()
         if mongo_dicts.count() > 0:
             output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
@@ -170,7 +172,7 @@ class Ui_Show_appointments(QMainWindow):
     def only_pesel_checked(self):
         output = self.mongo_manager.TextInformation.find(
                     {
-                        "pesel": self.combo_box_pesel.currentText(),
+                        "pesel": int(self.combo_box_pesel.currentText()),
                     }
                 )
         return output
@@ -197,7 +199,7 @@ class Ui_Show_appointments(QMainWindow):
     def pesel_date_checked(self):
         output = self.mongo_manager.TextInformation.find(
                     {
-                        "pesel": self.combo_box_pesel.currentText(),
+                        "pesel": int(self.combo_box_pesel.currentText()),
                         "creation_date": {
                             "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
                             "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
@@ -209,7 +211,7 @@ class Ui_Show_appointments(QMainWindow):
     def pesel_phy_name_checked(self):
         output = self.mongo_manager.TextInformation.find(
                     {
-                        "pesel": self.combo_box_pesel.currentText(),
+                        "pesel": int(self.combo_box_pesel.currentText()),
                         "pwz": self.pwz_dict[self.combo_box_physicans_name.currentText()]
                     }
                 )
@@ -230,7 +232,7 @@ class Ui_Show_appointments(QMainWindow):
     def all_radio_checked(self):
         output = self.mongo_manager.TextInformation.find(
                     {
-                        "pesel": self.combo_box_pesel.currentText(),
+                        "pesel": int(self.combo_box_pesel.currentText()),
                         "creation_date": {
                             "$gte": datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()),
                             "$lt" : datetime.datetime.combine(self.date_edit.date().toPyDate(), datetime.time()) + datetime.timedelta(days=1)
