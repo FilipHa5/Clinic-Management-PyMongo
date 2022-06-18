@@ -4,7 +4,7 @@ import datetime
 import random
 
 class Ui_Referral(QMainWindow):
-    def __init__(self, mongo_manager):
+    def __init__(self, mongo_manager, values):
         super().__init__()
         self.setObjectName("Referral")
         self.resize(542, 390)
@@ -48,7 +48,7 @@ class Ui_Referral(QMainWindow):
         self.push_button_return.setObjectName("push_button_return")
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
-        self.number
+        self.values = values
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Referral", "Form"))
@@ -70,7 +70,7 @@ class Ui_Referral(QMainWindow):
 
     def create_referral_data(self):
         referral_data = {
-            "title" : ("referral for patient" + self.values[1]),
+            "title" : ("referral for patient" + str(self.values[1])),
             "type" : "description",
             "pwz" : self.values[0],
             "pesel" : self.values[1],

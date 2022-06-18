@@ -5,7 +5,7 @@ import datetime
 import random
 
 class Ui_Prescription(QMainWindow):
-    def __init__(self, mongo_manager):
+    def __init__(self, mongo_manager, values):
         super().__init__()
         self.setObjectName("Prescription")
         self.resize(448, 364)
@@ -48,6 +48,7 @@ class Ui_Prescription(QMainWindow):
         self.push_button_add_2.setObjectName("push_button_add_2")
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
+        self.values = values
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Prescription", "Form"))
@@ -63,7 +64,6 @@ class Ui_Prescription(QMainWindow):
         self.push_button_add.clicked.connect(self.push_button_add_clicked)
         self.push_button_add_2.clicked.connect(self.add_drug)
         self.drugs_list = []
-        self.number
 
     def generate_number(self):
         number = random.randint(1000, 9999)
