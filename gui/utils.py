@@ -16,3 +16,70 @@ def populate_combo_box(combo_box, items):
         combo_box.addItem(str(item))
 
 
+def make_str_from_documents(docs, db_manager):
+    docs_str = ''
+    
+    for doc in docs:
+        docs_str += make_str_from_type(doc, db_manager) + '\n'
+    
+    return docs_str
+
+
+def make_str_from_type(document, db_manager):
+    document_str = ''
+    
+    document_str += 'Title: ' + document['title'] + '\n'
+    document_str += 'PWZ: ' + str(document['pwz']) + ' '
+    [document_str + i + ' ' for i in list(db_manager.Medician.find_one(
+                                                {'pwz': document['pwz']}, 
+                                                {'name':1, 'surname':1, '_id':0}
+                                            ).values())]
+    document_str += '\nPESEL: ' + str(document['pesel']) + ' '
+    [document_str + i + ' ' for i in list(db_manager.Patient.find_one(
+                                                {'pesel': document['pesel']}, 
+                                                {'name':1, 'surname':1, '_id':0}
+                                            ).values())]
+    document_str += '\nCreation date: ' + str(document['creation_date']) + '\n'
+    document_str += parse_from_type(document)
+    
+    return document_str
+
+
+def parse_from_type(document):
+    
+    if document['type'] == 'description':
+        output_str = parse_description(document)
+    if document['type'] == 'prescription':
+        output_str = parse_prescription(document)
+    if document['type'] == 'referral':
+        output_str = parse_referral(document)
+    
+    return output_str
+
+
+def parse_description(doc):
+    output = ''
+    output += 'Subjective examination: ' + doc['subjective_examination'] + '\n'
+    output += 'Physical examination: ' + doc['physical_examination'] + '\n'
+    output += 'Recomendations: ' + doc['recomendations'] + '\n'
+    return output
+
+
+def parse_prescription(doc):
+    output = 'Number: '
+    output += str(doc['number']) + '\n'
+    output += 'Drugs list:\n'
+    for drug in doc['drugs_list']:
+        output += '\t' + drug + '\n'
+    output += 'Recomendations: ' + doc['recomendations'] + '\n'
+    return output
+
+
+def parse_referral(doc):
+    output = 'Number: '
+    output += str(doc['number']) + '\n'
+    output += 'Destination specialization: ' + doc['destination_specialization'] + '\n'
+    output += 'Purpose: ' + doc['purpose'] + '\n'
+    return output
+
+

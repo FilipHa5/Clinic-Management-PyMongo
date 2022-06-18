@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from utils import make_str_from_documents
 
 
 
@@ -57,10 +58,34 @@ class Ui_Patient(QMainWindow):
         self.return_push_button.setText(_translate("Patient", "Return"))
         
         self.mongo_manager = mongo_manager
+        self.push_button_display.clicked.connect(self.push_button_display_clicked)
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
     
     
     def return_push_button_clicked(self):
         self.close()
+    
+    
+    def push_button_display_clicked(self):
+        if not (self.line_edit_pesel.text() != '' and 
+            self.line_edit_given_name.text() != '' and 
+            self.line_edit_last_name.text() != ''):
+            return
+        else:
+            self.perform_action_data()
+    
+    
+    def get_mongo_dicts(self):
+        try:
+            informations_dict = self.mongo_manager.TextInformation.find({'pesel': int(self.line_edit_pesel.text())})
+            return informations_dict
+        except Exception as e:
+            print (e)
+    
+    
+    def perform_action_data(self):
+        mongo_dicts = self.get_mongo_dicts()
+        output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
+        self.display_text_edit.setPlainText(output_string)
 
 

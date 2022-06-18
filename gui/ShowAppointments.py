@@ -1,6 +1,7 @@
 import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
+from utils import make_str_from_documents
 
 
 
@@ -128,6 +129,8 @@ class Ui_Show_appointments(QMainWindow):
     
     def push_button_display_clicked(self):
         mongo_dicts = self.push_button_display_logic()
+        output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
+        self.display_text_edit.setPlainText(output_string)
         
     
     def push_button_display_logic(self):
@@ -235,6 +238,4 @@ class Ui_Show_appointments(QMainWindow):
                     }
                 )
         return output
-
-
 

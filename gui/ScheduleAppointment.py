@@ -117,9 +117,9 @@ class Ui_ScheduleAppointment(QMainWindow):
             self.combo_box_physicans_name.count()):
             return
         else:
-            self.perform_action_on_data()
+            self.perform_action_with_data()
         
-    def perform_action_on_data(self):
+    def perform_action_with_data(self):
         try:
             appointment_data = self.create_appointment_dict()
             self.mongo_manager.Appointment.insert_one(appointment_data)
