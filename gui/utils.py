@@ -49,17 +49,17 @@ def make_str_from_type(document, db_manager):
     document_str = ''
     
     document_str += 'Title: ' + document['title'] + '\n'
-    document_str += 'PWZ: ' + str(document['pwz']) + ' '
-    [document_str + i + ' ' for i in list(db_manager.Medician.find_one(
-                                                {'pwz': document['pwz']}, 
-                                                {'name':1, 'surname':1, '_id':0}
-                                            ).values())]
-    document_str += '\nPESEL: ' + str(document['pesel']) + ' '
-    [document_str + i + ' ' for i in list(db_manager.Patient.find_one(
-                                                {'pesel': document['pesel']}, 
-                                                {'name':1, 'surname':1, '_id':0}
-                                            ).values())]
-    document_str += '\nCreation date: ' + str(document['creation_date']) + '\n'
+    document_str += 'PWZ: ' + str(int(document['pwz'])) + ' '
+    document_str += ' '.join([ i for i in list(db_manager.Medician.find_one(
+                                                {'pwz': int(document['pwz'])}, 
+                                                {'name':1, 'last_name':1, '_id':0}
+                                            ).values())]) + '\n'
+    document_str += 'PESEL: ' + str(int(document['pesel'])) + ' '
+    document_str += ' '.join([ i for i in list(db_manager.Patient.find_one(
+                                                {'pesel': int(document['pesel'])}, 
+                                                {'name':1, 'last_name':1, '_id':0}
+                                            ).values())]) + '\n'
+    document_str += 'Creation date: ' + str(document['creation_date']) + '\n'
     document_str += parse_from_type(document)
     
     return document_str
@@ -87,17 +87,16 @@ def parse_description(doc):
 
 def parse_prescription(doc):
     output = 'Number: '
-    output += str(doc['number']) + '\n'
+    output += str(int(doc['number'])) + '\n'
     output += 'Drugs list:\n'
     for drug in doc['drugs_list']:
         output += '\t' + drug + '\n'
-    output += 'Recomendations: ' + doc['recomendations'] + '\n'
     return output
 
 
 def parse_referral(doc):
     output = 'Number: '
-    output += str(doc['number']) + '\n'
+    output += str(int(doc['number'])) + '\n'
     output += 'Destination specialization: ' + doc['destination_specialization'] + '\n'
     output += 'Purpose: ' + doc['purpose'] + '\n'
     return output
