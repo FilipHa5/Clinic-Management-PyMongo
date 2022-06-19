@@ -4,8 +4,10 @@ from PyQt5.QtWidgets import QMainWindow
 from .AppointmentData import Ui_AppointmentData
 from .Prescription import Ui_Prescription
 from .Referral import Ui_Referral
+from datetime import datetime
 from .utils import block_parrent_window
 from .utils import make_str_from_documents
+from. utils import make_str_from_appoinment
 
 
 class Ui_Medician2(QMainWindow):
@@ -94,39 +96,91 @@ class Ui_Medician2(QMainWindow):
         self.return_push_button.clicked.connect(self.return_push_button_clicked)
 
         self.mongo_manager = mongo_manager
-        self.values = []
-        self.return_push_button.clicked.connect(self.return_push_button_clicked)
+
         self.apply_pwz_push_button.clicked.connect(self.apply_pwz_push_button_clicked)
+        patients_dict = list(self.mongo_manager.Patient.find({},{
+            '_id':0,
+            'pesel':1,
+            'name':1,
+            'last_name':1
+        }
+        ))
+        for patient in patients_dict:
+            pesel = patient['pesel']
+            name = patient['name']
+            last_name = patient['last_name']
+            data = str(pesel) + ' '  + name + ' ' + last_name
+            self.combo_box_patient.addItem(data)
+            
+        content = self.combo_box_patient.currentText()
+        pesel, none, none = content.split(' ')
+        history = str(list(self.mongo_manager.TextInformation.find({
+            'pesel' : pesel
+        })))
+        self.display_history_text_edit.setPlainText(history)
 
-
-    def create_needed_values(self):
-        self.values.append()
-        return self.values
 
     def apply_pwz_push_button_clicked(self):
-        pwz_int = int(self.pwz_line_edit.text())
-        appointments = self.mongo_manager.Appointment.find(
-                        {
-                        'pwz':
-                            {'$eq': pwz_int}
-                        }
-                    )      
-        self.combo_box_date.addItems(self.mongo_manager.Appointment.distinct('time'))
-        self.create_needed_values()
-        for visit in appointments:
-            self.display_text_edit.append(make_str_from_documents(visit, self.mongo_manager))
+        if self.combo_box_date.currentText() == '':
+            pwz_int = int(self.pwz_line_edit.text())
+            appointments = self.mongo_manager.Appointment.find(
+                            {
+                            'pwz':
+                                {'$eq': pwz_int}
+                            }
+                        )      
+            output_str = (self.mongo_manager.Appointment.distinct('time'))
+            for element in output_str:
+                self.combo_box_date.addItem(str(element))
+            docs_str = make_str_from_appoinment(appointments, self.mongo_manager)
+            print (docs_str)
+            self.display_text_edit.setPlainText(docs_str)
+            return appointments
+        else:
+            self.populate_visit_display()
+
+        #for appointment in appointments:
+        docs_str = make_str_from_appoinment(appointments, self.mongo_manager)
+        print (docs_str)
+        self.display_text_edit.setPlainText(docs_str)
+
+    def populate_visit_display(self):
+
+        # poniżej to, co próbowałem zrobić, ale nie osiągnąłem dobrego efektu
+        #from_date = datetime.strptime(self.combo_box_date.currentText(),'%Y-%m-%d %H:%M:%S') + "T00:00:00+00:00"
+        #to_date = datetime.strptime(self.combo_box_date.currentText(),'%Y-%m-%d %H:%M:%S') + "T23:59:59+00:00"
+        #date_time = datetime.strptime(self.combo_box_date.currentText(), ,'%Y-%m-%d %H:%M:%S')
+
+        dt = datetime.strptime(self.combo_box_date.currentText(),'%Y-%m-%d %H:%M:%S') #tu się wywala
+                
+        #kod poniżej działa, ale tak jakby zapytanie nic nie zwracało
+        dt = self.combo_box_date.currentText().toPyDateTime()
+        appointments = self.mongo_manager.Appointment.find({},
+            {'pwz': {'$eq': ['$pwz',int(self.pwz_line_edit.text())]}},
+            {'time': {"$eq": ['$time',dt]}}    
+            )
+        docs_str = make_str_from_appoinment(appointments, self.mongo_manager)
+        print (docs_str)
+        print ("printed")
+        self.display_text_edit.setPlainText(docs_str)
+    
+
 
     def return_push_button_clicked(self):
         self.close()
 
     def push_button_ref_clicked(self):
-        self.ui = Ui_Referral(self.mongo_manager, self.values)
+        values = []
+        values.append(self.combo_box_patient.currentText(), self.pwz_line_edit.text())
+        self.ui = Ui_Referral(self.mongo_manager, values)
         block_parrent_window(self)
 
     def push_button_presc_clicked(self):
-        self.ui = Ui_Prescription(self.mongo_manager, self.values)
+        values = []
+        self.ui = Ui_Prescription(self.mongo_manager, values)
         block_parrent_window(self)
 
     def push_button_desc_clicked(self):
-        self.ui = Ui_AppointmentData(self.mongo_manager, self.values)
+        values = []
+        self.ui = Ui_AppointmentData(self.mongo_manager, values)
         block_parrent_window(self)
