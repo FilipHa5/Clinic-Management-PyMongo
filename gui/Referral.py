@@ -82,13 +82,11 @@ class Ui_Referral(QMainWindow):
     def push_button_add_clicked(self):
         try:
             referral_data = self.create_referral_data()
-            self.mongo_manager.TextInformation.insert_one(referral_data)
-            ref_id = list(self.mongo_manager.TextInformation.find_one({
-                "creation_date" : {"$eq":self.now}
-            }, {"_id":1}))
-            print(ref_id)
+            x = self.mongo_manager.TextInformation.insert_one(referral_data)
+            _id = "ObjectId('%s')"
             self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
-                        {'$push': {'documents': ref_id}})
+                        {'$push': {'documents': _id%x.inserted_id}})
+            self.close()
         except Exception as e:
             print (e)
 

@@ -70,7 +70,7 @@ class Ui_AppointmentData(QMainWindow):
 
     def create_appointment_dict(self):
         appointment_data = {
-            "title" : ("report for patient" + self.values["pesel"]),
+            "title" : ("report for patient" + str(self.values["pesel"])),
             "type" : "description",
             "pwz" : self.values["pwz"],
             "pesel" : self.values["pesel"],
@@ -84,12 +84,12 @@ class Ui_AppointmentData(QMainWindow):
     def push_button_add_clicked(self):
         try:
             appointment_data = self.create_appointment_dict()
-            self.mongo_manager.TextInformation.insert_one(appointment_data)
-            appointment_id = list(self.mongo_manager.TextInformation.find_one({
-                "creation_date" : {"$eq":self.now}
-            }, {"_id":1}))
+            x = self.mongo_manager.TextInformation.insert_one(appointment_data)
+            _id = "ObjectId('%s')"
+            to_insert = (_id % x.inserted_id)
             self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
-            {'$push': {'documents': appointment_id}})  
+                        {'$push': {'documents':to_insert}})
+            self.close()  
         except Exception as e:
             print (e)
 

@@ -89,17 +89,16 @@ class Ui_Prescription(QMainWindow):
     def push_button_add_clicked(self):
         try:
             prescription_data = self.create_prescription_data()
-            self.mongo_manager.TextInformation.insert_one(prescription_data)
-            presc_id = list(self.mongo_manager.TextInformation.find_one({
-                "creation_date" : {"$eq":self.now}
-            }, {"_id":1}))
+            x = self.mongo_manager.TextInformation.insert_one(prescription_data)
+            _id = "ObjectId('%s')"
             self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
-                        {'$push': {'documents': presc_id}})           
+                        {'$push': {'documents': _id%x.inserted_id}})
+            self.close()         
         except Exception as e:
             print (e)
 
     def add_drug(self):
-        self.drugs_list += self.text_edit_drug.toPlainText()
+        self.drugs_list.append(self.text_edit_drug.toPlainText())
         self.text_edit_drug.clear()
 
     def push_button_return_clicked(self):
