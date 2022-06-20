@@ -105,10 +105,16 @@ class Ui_Medician(QMainWindow):
         self.pesel_dict = {}
 
     def apply_appointment_push_button_clicked(self):
-        pesel = self.pesel_dict[self.combo_box_appointments.currentText()]
-        doc = self.mongo_manager.TextInformation.find({"pesel":{"$eq":pesel}})
-        out = make_str_from_documents(doc, self.mongo_manager)
-        self.display_history_text_edit.setPlainText(out)
+        self.display_history_text_edit.clear()
+        mongo_dicts = self.make_documents_from_appointment()
+        output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
+        self.display_history_text_edit.setPlainText(output_string)
+
+    def make_documents_from_appointment(self):
+        docs_ids_list = self.mongo_manager.Appointment.find_one({'_id': self.appointments_dict[self.combo_box_appointments.currentText()]}, 
+            {"_id" :0, "documents" :1})["documents"]
+        mongo_docs = self.mongo_manager.TextInformation.find({"_id":{"$in":docs_ids_list}})
+        return mongo_docs
 
 
     def apply_pwz_push_button_clicked(self):
@@ -138,7 +144,6 @@ class Ui_Medician(QMainWindow):
                         }
                     })
         out_str = make_str_from_appoinment(output_to_print, self.mongo_manager)
-        print (out_str)
         self.display_text_edit.setPlainText(out_str)
         self.combo_box_appointments.addItems(self.populate_combo_box_appointments())
 

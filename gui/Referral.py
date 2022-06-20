@@ -69,7 +69,7 @@ class Ui_Referral(QMainWindow):
     def create_referral_data(self):
         referral_data = {
             "title" : ("referral for patient" + str(self.values["pesel"])),
-            "type" : "description",
+            "type" : "referral",
             "pwz" : self.values["pwz"],
             "pesel" : self.values["pesel"],
             "creation_date" : self.now,

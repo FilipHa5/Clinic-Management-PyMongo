@@ -17,18 +17,22 @@ def populate_combo_box(combo_box, items):
 
 def make_str_from_appoinment(docs, db_manager):
     docs_str = ''
-
-    for doc in docs:
-        docs_str += make_str_from_type_appointment(doc, db_manager) + '\n'
-    return docs_str
+    try:
+        for doc in docs:
+            docs_str += make_str_from_type_appointment(doc, db_manager) + '\n'
+        return docs_str
+    except Exception as e:
+        return("")
 
 def make_str_from_documents(docs, db_manager):
     docs_str = ''
-    
-    for doc in docs:
-        docs_str += make_str_from_type(doc, db_manager) + '\n'
-    
-    return docs_str
+    try:
+        for doc in docs:
+            docs_str += make_str_from_type(doc, db_manager) + '\n'
+        return docs_str
+    except Exception as e:
+        return("")
+
 
 
 def make_str_from_type(document, db_manager):
