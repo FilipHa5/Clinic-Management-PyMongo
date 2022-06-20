@@ -111,7 +111,6 @@ class Ui_AddPatient(QMainWindow):
     def push_button_add_patient_clicked(self):
         if (self.line_edit_pesel.text() == '' or self.line_edit_given_name.text() == '' or
             self.line_edit_last_name.text() == ''):
-            print ("Not enough data")
             return
         else:
             self.perform_action_on_data()

@@ -14,4 +14,3 @@ class MongoManager:
         else:
             client = pymongo.MongoClient('localhost', 27017)
             MongoManager.__instance = client['Clinic']
-            

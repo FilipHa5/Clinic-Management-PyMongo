@@ -175,12 +175,18 @@ class Ui_Medician2(QMainWindow):
 
     def push_button_presc_clicked(self):
         if not self.combo_box_appointments.currentText() == '':
-            values = []
+            nr_id = self.appointments_dict[self.combo_box_appointments.currentText()]
+            pwz = int(self.pwz_line_edit.text())
+            pesel = self.pesel_dict[self.combo_box_appointments.currentText()]
+            self.values_dict = {"pwz" : pwz, "pesel": pesel,"nr_id" : nr_id}
             self.ui = Ui_Prescription(self.mongo_manager, self.values_dict)
             block_parrent_window(self)
 
     def push_button_desc_clicked(self):
         if not self.combo_box_appointments.currentText() == '':
-            values = []
+            nr_id = self.appointments_dict[self.combo_box_appointments.currentText()]
+            pwz = int(self.pwz_line_edit.text())
+            pesel = self.pesel_dict[self.combo_box_appointments.currentText()]
+            self.values_dict = {"pwz" : pwz, "pesel": pesel,"nr_id" : nr_id}
             self.ui = Ui_AppointmentData(self.mongo_manager, self.values_dict)
             block_parrent_window(self)

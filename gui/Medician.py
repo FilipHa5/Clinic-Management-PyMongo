@@ -104,7 +104,6 @@ class Ui_MedicianWindow(QMainWindow):
                     )        
         for pwz in appointments:
             self.display_text_edit.append(str(pwz))
-            print(pwz)
 
 
 
