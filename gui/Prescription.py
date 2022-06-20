@@ -49,6 +49,7 @@ class Ui_Prescription(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(self)
         self.mongo_manager = mongo_manager
         self.values = values
+        self.now = datetime.datetime.now()
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Prescription", "Form"))
@@ -63,6 +64,8 @@ class Ui_Prescription(QMainWindow):
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
         self.push_button_add.clicked.connect(self.push_button_add_clicked)
         self.push_button_add_2.clicked.connect(self.add_drug)
+        self.line_edit_ID.setText(str(random.randint(1000,9999)))
+        self.text_display.setText("PESEL:" + str(self.values["pesel"]))
         self.drugs_list = []
 
     def generate_number(self):
@@ -75,10 +78,10 @@ class Ui_Prescription(QMainWindow):
         prescription_data = {
             "title" : ("prescription for patient" + self.values[1]),
             "type" : "prescription",
-            "pwz" : self.values[0],
-            "pesel" : self.values[1],
-            "creation_date" : datetime.now(),
-            "number" : int(self.line_edit_ID.text()),
+            "pwz" : self.values["pwz"],
+            "pesel" : self.values["pesel"],
+            "creation_date" : self.now,
+            'number' : int(self.line_edit_ID.text()),
             "drugs_list" : self.drugs_list,
         }
         return prescription_data
@@ -87,6 +90,11 @@ class Ui_Prescription(QMainWindow):
         try:
             prescription_data = self.create_prescription_data()
             self.mongo_manager.TextInformation.insert_one(prescription_data)
+            presc_id = list(self.mongo_manager.TextInformation.find_one({
+                "creation_date" : {"$eq":self.now}
+            }, {"_id":1}))
+            self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
+                        {'$push': {'documents': presc_id}})           
         except Exception as e:
             print (e)
 

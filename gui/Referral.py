@@ -62,19 +62,17 @@ class Ui_Referral(QMainWindow):
         
         self.push_button_return.clicked.connect(self.push_button_return_clicked)
         self.push_button_add.clicked.connect(self.push_button_add_clicked)
-
-    def generate_number(self):
-        number = random.randint(1000, 9999)
-        self.line_edit_id.setText(str(number))
-        return number
+        self.now = datetime.datetime.now()
+        self.line_edit_id.setText(str(random.randint(1000,9999)))
+        self.text_edit_patient_data.setText("PESEL:" + str(self.values["pesel"]))
 
     def create_referral_data(self):
         referral_data = {
             "title" : ("referral for patient" + str(self.values[1])),
             "type" : "description",
-            "pwz" : self.values[0],
-            "pesel" : self.values[1],
-            "creation_date" : datetime.now(),
+            "pwz" : self.values["pwz"],
+            "pesel" : self.values["pesel"],
+            "creation_date" : self.now,
             'number' : int(self.line_edit_id.text()),
             'destination_specialization' : self.line_edit_dest.text(),
             "purpose" : self.text_edit_description.toPlainText()
@@ -85,6 +83,12 @@ class Ui_Referral(QMainWindow):
         try:
             referral_data = self.create_referral_data()
             self.mongo_manager.TextInformation.insert_one(referral_data)
+            ref_id = list(self.mongo_manager.TextInformation.find_one({
+                "creation_date" : {"$eq":self.now}
+            }, {"_id":1}))
+            print(ref_id)
+            self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
+                        {'$push': {'documents': ref_id}})
         except Exception as e:
             print (e)
 

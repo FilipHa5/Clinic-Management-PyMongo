@@ -22,20 +22,6 @@ def make_str_from_appoinment(docs, db_manager):
         docs_str += make_str_from_type_appointment(doc, db_manager) + '\n'
     return docs_str
 
-def make_str_from_type_appointment(document, db_manager):
-    document_str = ''
-    #document_str += 'Appointment: ' + document['_id'] + '\n'
-    document_str += 'PESEL: ' + str(document['pesel']) + ' '
-    '''[document_str + i + ' ' for i in list(db_manager.Patient.find_one(
-                                                {'pesel': document['pesel']}, 
-                                                {'name':1, 'surname':1, '_id':0}
-                                            ).values())]'''
-    document_str += 'Time: ' + str(document['time']) + '\n'
-    print (document_str)
-    return document_str
-
-
-
 def make_str_from_documents(docs, db_manager):
     docs_str = ''
     
@@ -101,4 +87,13 @@ def parse_referral(doc):
     output += 'Purpose: ' + doc['purpose'] + '\n'
     return output
 
-
+def make_str_from_type_appointment(document, db_manager):
+    document_str = ''
+    #document_str += 'Appointment: ' + document['_id'] + '\n'
+    document_str += 'PESEL: ' + str(document['pesel']) + ' '
+    '''[document_str + i + ' ' for i in list(db_manager.Patient.find_one(
+                                                {'pesel': document['pesel']}, 
+                                                {'name':1, 'surname':1, '_id':0}
+                                            ).values())]'''
+    document_str += 'Time: ' + str(document['time']) + '\n'
+    return document_str
