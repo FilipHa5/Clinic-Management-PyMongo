@@ -76,7 +76,7 @@ class Ui_Prescription(QMainWindow):
     def create_prescription_data(self):
 
         prescription_data = {
-            "title" : ("prescription for patient" + self.values[1]),
+            "title" : ("prescription for patient" + str(self.values["pesel"])),
             "type" : "prescription",
             "pwz" : self.values["pwz"],
             "pesel" : self.values["pesel"],

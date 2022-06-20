@@ -70,7 +70,7 @@ class Ui_AppointmentData(QMainWindow):
 
     def create_appointment_dict(self):
         appointment_data = {
-            "title" : ("report for patient" + self.values[1]),
+            "title" : ("report for patient" + self.values["pesel"]),
             "type" : "description",
             "pwz" : self.values["pwz"],
             "pesel" : self.values["pesel"],
