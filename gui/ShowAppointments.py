@@ -131,9 +131,8 @@ class Ui_Show_appointments(QMainWindow):
     def push_button_display_clicked(self):
         self.display_text_edit.clear()
         mongo_dicts = self.push_button_display_logic()
-        if mongo_dicts.count() > 0:
-            output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
-            self.display_text_edit.setPlainText(output_string)
+        output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
+        self.display_text_edit.setPlainText(output_string)
         
     
     def push_button_display_logic(self):
