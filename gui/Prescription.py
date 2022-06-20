@@ -90,9 +90,9 @@ class Ui_Prescription(QMainWindow):
         try:
             prescription_data = self.create_prescription_data()
             x = self.mongo_manager.TextInformation.insert_one(prescription_data)
-            _id = "ObjectId('%s')"
+            #_id = "ObjectId('%s')"
             self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
-                        {'$push': {'documents': _id%x.inserted_id}})
+                        {'$push': {'documents': x.inserted_id}})
             self.close()         
         except Exception as e:
             print (e)

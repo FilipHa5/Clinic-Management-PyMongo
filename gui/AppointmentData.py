@@ -85,10 +85,8 @@ class Ui_AppointmentData(QMainWindow):
         try:
             appointment_data = self.create_appointment_dict()
             x = self.mongo_manager.TextInformation.insert_one(appointment_data)
-            _id = "ObjectId('%s')"
-            to_insert = (_id % x.inserted_id)
             self.mongo_manager.Appointment.update_one({'_id': self.values["nr_id"]}, 
-                        {'$push': {'documents':to_insert}})
+                        {'$push': {'documents':x.inserted_id}})
             self.close()  
         except Exception as e:
             print (e)
