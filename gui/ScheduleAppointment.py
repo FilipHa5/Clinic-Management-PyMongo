@@ -32,9 +32,9 @@ class Ui_ScheduleAppointment(QMainWindow):
         font.setPointSize(9)
         self.label_specialization.setFont(font)
         self.label_specialization.setObjectName("label_specialization")
-        self.line_edit_pesel = QtWidgets.QComboBox(self)
-        self.line_edit_pesel.setGeometry(QtCore.QRect(170, 50, 121, 20))
-        self.line_edit_pesel.setObjectName("line_edit_pesel")
+        self.pesel_combo_box = QtWidgets.QComboBox(self)
+        self.pesel_combo_box.setGeometry(QtCore.QRect(170, 50, 121, 20))
+        self.pesel_combo_box.setObjectName("pesel_combo_box")
         self.combo_box_specialization = QtWidgets.QComboBox(self)
         self.combo_box_specialization.setGeometry(QtCore.QRect(170, 140, 121, 21))
         font = QtGui.QFont()
@@ -73,7 +73,7 @@ class Ui_ScheduleAppointment(QMainWindow):
         self.setWindowTitle(_translate("ScheduleAppointment", "Form"))
         self.push_button_schedule.setText(_translate("ScheduleAppointment", "Schedule"))
         self.push_button_return.setText(_translate("ScheduleAppointment", "Return"))
-        #self.label_pesel.setText(_translate("ScheduleAppointment", "Patient PESEL"))
+        self.label_pesel.setText(_translate("ScheduleAppointment", "Patient PESEL"))
         self.label_time.setText(_translate("ScheduleAppointment", "Time of appointment"))
         self.label_specialization.setText(_translate("ScheduleAppointment", "Physican\'s specialization"))
         self.label_header.setText(_translate("ScheduleAppointment", "Schedule appointment"))
@@ -84,7 +84,7 @@ class Ui_ScheduleAppointment(QMainWindow):
         self.push_button_schedule.clicked.connect(self.push_button_schedule_clicked)
         self.combo_box_specialization.addItems(self.mongo_manager.Specialization.distinct('specialization'))
         self.combo_box_specialization.currentIndexChanged.connect(self.populate_combo_box_physicans_name)
-        self.line_edit_pesel.addItems([str (i) for i in self.mongo_manager.Patient.distinct("pesel")])
+        self.pesel_combo_box.addItems([str (i) for i in self.mongo_manager.Patient.distinct("pesel")])
 
     
     def populate_combo_box_physicans_name(self):
@@ -104,7 +104,7 @@ class Ui_ScheduleAppointment(QMainWindow):
     
     def create_appointment_dict(self):
         appointment_data = {
-            'pesel' : int(self.line_edit_pesel.currentText()),
+            'pesel' : int(self.pesel_combo_box.currentText()),
             'time' : self.date_time_edit.dateTime().toPyDateTime(),
             'physicans_spec' : self.combo_box_specialization.currentText(),
             'pwz' : self.pwz_dict[self.combo_box_physicans_name.currentText()],
@@ -113,7 +113,7 @@ class Ui_ScheduleAppointment(QMainWindow):
         return appointment_data
     
     def push_button_schedule_clicked(self):
-        if not (self.line_edit_pesel.currentText() != '' and 
+        if not (self.pesel_combo_box.currentText() != '' and 
             self.combo_box_specialization.count() and 
             self.combo_box_physicans_name.count()):
             return

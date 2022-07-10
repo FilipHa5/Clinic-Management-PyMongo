@@ -133,7 +133,14 @@ class Ui_Show_appointments(QMainWindow):
         mongo_dicts = self.push_button_display_logic()
         output_string = make_str_from_documents(mongo_dicts, self.mongo_manager)
         self.display_text_edit.setPlainText(output_string)
-        
+    
+    
+    def check_physicans_name_chosen(self):
+        if self.combo_box_physicans_name.count() == 0:
+            return False
+        else:
+            return True
+    
     
     def push_button_display_logic(self):
         
@@ -147,19 +154,23 @@ class Ui_Show_appointments(QMainWindow):
             mongo_output = self.only_date_checked()
         
         if self.phy_name_radio_button.isChecked() and not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked()):
-            mongo_output = self.only_phy_name_checked()
+            if self.check_physicans_name_chosen():
+                mongo_output = self.only_phy_name_checked()
         
         if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and not(self.phy_name_radio_button.isChecked()):
             mongo_output = self.pesel_date_checked()
         
         if self.pesel_radio_button.isChecked() and not(self.date_radio_button.isChecked()) and self.phy_name_radio_button.isChecked():
-            mongo_output = self.pesel_phy_name_checked()
+            if self.check_physicans_name_chosen():
+                mongo_output = self.pesel_phy_name_checked()
         
         if not(self.pesel_radio_button.isChecked()) and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
-            mongo_output = self.date_phy_name_checked()
+            if self.check_physicans_name_chosen():
+                mongo_output = self.date_phy_name_checked()
         
         if self.pesel_radio_button.isChecked() and self.date_radio_button.isChecked() and self.phy_name_radio_button.isChecked():
-            mongo_output = self.all_radio_checked()
+            if self.check_physicans_name_chosen():
+                mongo_output = self.all_radio_checked()
         
         return mongo_output
     
