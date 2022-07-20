@@ -136,13 +136,14 @@ class Ui_Show_appointments(QMainWindow):
     
     
     def check_physicans_name_chosen(self):
-        if self.combo_box_physicans_name.count() == 0:
+        if self.combo_box_physicans_name.currentIndex() == 0:
             return False
         else:
             return True
     
     
     def push_button_display_logic(self):
+        mongo_output = None
         
         if not(self.pesel_radio_button.isChecked() or self.date_radio_button.isChecked() or self.phy_name_radio_button.isChecked()):
             mongo_output = self.no_radio_checked()
